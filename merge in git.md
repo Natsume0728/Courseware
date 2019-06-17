@@ -4,7 +4,7 @@
     1. 在master分支上新建文件001.html后commit。
     1. 新建并转到dev分支，`git checkout -b dev`。
     1. 在dev分支上新建文件002.html后commit。
-    1. 转回master并合并分支dev，`git merge dev`
+    1. 转回master并合并分支dev，`git merge dev`。
 ![Fast-forward](./img/git_009.png)
 git点线树显示如下`git log --graph --oneline`：
 ![Fast-forward](./img/git_010.jpg)
