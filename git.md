@@ -76,5 +76,6 @@ and the repository exists.</code>
 ![--pretty=oneline](./img/git_007.jpg)  
     + `git log --graph --oneline`git点线树单行显示，==commit id简写==。  
 ![--pretty=oneline](./img/git_008.jpg)  
-    + `gitk`内置图形化工具，`git log`命令的可视化版本  
+    + `git log --graph --oneline --all`==增加参数`--all`可显示所有分支的点线树==。
+    + `gitk`内置图形化工具，`git log`命令的可视化版本  ，同样可以加==参数`--all`。==
 [转至:git log命令的详细介绍](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)  
