@@ -1,0 +1,1 @@
+# hasOwnProperty 属性

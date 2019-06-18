@@ -11,12 +11,16 @@
     1. 按"Esc"  
     1. 输入":wq",按回车键即可  
 
-+ <code> ssh: connect to host github.com port 22: Connection timed out  
-fatal: Could not read from remote repository.  
-Please make sure you have the correct access rights  
-and the repository exists.</code>  
++ 
 
-    利用ssh 及命令`git clone...`下载GitHub上的仓库报上述错误，且ssh公钥已在GitHub保存，经 {==`ssh -T git@github.com`==}测试ssh是否配置成功，同样报`ssh: connect to host github.com port 22: Connection timed out`错误，错误提示中有`22 端口`，暂未找到端口相关解决方式，可行解决方式：`Clone with HTTP`,命令`git clone https://github.com/Natsume0728/markdown.git`即可正常下载。  
+```git
+    ssh: connect to host github.com port 22: Connection timed out  
+    fatal: Could not read from remote repository.  
+    Please make sure you have the correct access rights  
+    and the repository exists.
+```
+
+利用ssh 及命令`git clone...`下载GitHub上的仓库报上述错误，且ssh公钥已在GitHub保存，经 {==`ssh -T git@github.com`==}测试ssh是否配置成功，同样报`ssh: connect to host github.com port 22:Connection timed out`错误，错误提示中有`22 端口`，暂未找到端口相关解决方式，可行解决方式：`Clone with HTTP`,命令`git clone https://github.com/Natsume0728/markdown.git`即可正常下载。  
 
 ## git文件状态`git status`  
 
@@ -56,26 +60,83 @@ and the repository exists.</code>
 
 ***
 
+[远程仓库的使用](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8)  
+
 + `git remote add <远程仓库的本地名称> url`  
-+ `git remote add <origin> url`关联远程库  
-+ `git push -u <origin> master`把本地库内容推送到远程，用`git push`命令，实际上是把当前分支`master`推送到远程，首次推送时，远程库为空，加上`-u`==参数==，Git不但会把本地的`master`分支内容推送到远程新的`master`分支，还会把本地的`master`分支和远程的`master`分支关联起来，在以后推送或拉取的时候就可以简化命令。  
-+ `got push origin master`本地提交后，把本地`master`分支的最新修改推送到远程库  
-+ `git clone url`克隆远程仓库，<mark>该命令不要求在`init`后的目录中使用，本地非git初始化目录也可使用。</mark>  
++ `git clone url`克隆远程仓库，==该命令不要求在`init`后的目录中使用，本地非git初始化目录也可使用，克隆完项目后会有一个默认名为origin的远程库==。  
++ `git remote`列出每个远程库的简短名字。  
++ `git remote -v`显示对应的克隆地址。  
++ `git remote show [remote-name]`查看远程仓库的详细信息。  
++ `git remote add [shortname][url]`添加远程库  
++ `git remote rename [old_name][new_name]`修改远程仓库的本地简称。  
++ `git remote rm [remote_name]`移除远端仓库。  
+
+***
+Git push  
+在使用git commit命令将修改从暂存区提交到本地版本库后，只剩下最后一步将本地版本库的分支推送到远程服务器上对应的分支。  
+
++ `git push origin [local_branch_name]:[remote_branch_name]`把本地分支locan_branch_name推送到远程库，并在远程库中新建名为[remote_branch_name]的分支。  
++ `git push origin [branch_name]`远程分支被省略，将本地分支推送到与之存在追踪关系的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。  
++ `git push origin` 如果当前分支与远程分支存在追踪关系，则本地分支和远程分支都可以省略，将当前分支推送到origin主机的对应分支  
++ `git push -u origin master`如果当前分支与多个主机存在追踪关系，则可以使用 -u 参数指定一个默认主机，这样后面就可以不加任何参数使用git push，不带任何参数的git push，默认只推送当前分支，这叫做==simple方式==，还有一种==matching方式==，会推送所有有对应的远程分支的本地分支， Git 2.0之前默认使用matching，现在改为simple方式如果想更改设置，可以使用git config命令。git config --global push.default matching OR git config --global push.default simple；可以使用git config -l 查看配置
++ `git push --all origin`当遇到这种情况就是不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机，这时需要 -all 选项。  
++ `git push --force origin git push`的时候需要本地先git pull更新到跟服务器版本一致，如果本地版本库比远程服务器上的低，那么一般会提示你git pull更新，如果一定要提交，那么可以使用这个命令。
++ `git push [远程名]:[分支名]`删除远程分支
 
 ***
 
 + `git checkout -b dev`创建并切换到新分支dev
 + `git branch dev`创建新分支dev
 + `git checkout dev`切换到新分支
-+ `git branch`查看当前分支
++ `git branch`查看当前所有分支
++ `git branch -v`查看各个分支最后一个提交对象的信息
++ `git branch --merged`查看哪些分支已被并入当前分支(即是当前分支的直接上游分支。)
++ `git branch --no-merged`查看尚未合并分支
 + `git merge dev`合并指定分支(dev)到当前分支
 + `git branch -d dev`删除分支dev
++ `git branch -D dev`强制删除分支(若所删除分支中包含未合并信息，需要用参数-D强制删除)
 + `git log --graph`git点线树  
 ![git log --graph](./img/git_006.jpg)  
-    + `git log --graph --pretty=oneline`git点线树单行显示，==commit id完整显示==。  
+  + `git log --graph --pretty=oneline`git点线树单行显示，==commit id完整显示==。  
 ![--pretty=oneline](./img/git_007.jpg)  
-    + `git log --graph --oneline`git点线树单行显示，==commit id简写==。  
-![--pretty=oneline](./img/git_008.jpg)  
-    + `git log --graph --oneline --all`==增加参数`--all`可显示所有分支的点线树==。
-    + `gitk`内置图形化工具，`git log`命令的可视化版本  ，同样可以加==参数`--all`。==  
-[转至:git log命令的详细介绍](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)  
+  + `git log --graph --oneline`git点线树单行显示，==commit id简写==。  
+![--pretty=oneline](./img/git_008.jpg)
+  + `git log --graph --oneline --all`==增加参数`--all`可显示所有分支的点线树==。
+  + `gitk`内置图形化工具，`git log`命令的可视化版本  ，同样可以加==参数`--all`。==  
+[git log命令的详细介绍](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)  
+
+***
+tag
+
++ `git tag`查看所有标签。
++ `git tag <tagname> [commit id]`用于新建一个标签，默认为HEAD,也可以指定一个commit id
++ `git tag -a <tagname> -m [message]`指定标签信息
++ `git tag -d <tagname>`删除一个本地标签
++ `git push origin <tagname>`推送一个本地标签
++ `git push origin --tags`推送全部未推送过的本地标签
++ `git push origin :refs/tags/<tagname>`删除一个远程标签
+
+***
+
+tips：
+
++ git fetch 和 git pull 的差别
+  git fetch 相当于是从远程获取最新到本地，不会自动merge  
+
+  ```git
+   git fetch github master//将远程仓库github的master分支下载到本地当前branch中
+   git log -p master ..github/master//比较本地master分支和远程仓库master分支的差别
+   git merge github/master//进行合并
+   ```
+
+  类似指令  
+  
+  ```git
+    git fetch github master:tmp//从远程仓库master分支获取最新，并在本地建立tep分支
+    git diff tmp//将当前分支和tmp进行对比
+    git merge tmp//合并tmp分支到当前分支
+  ```
+  
+  git pull 相当于是从远程获取最新版本并merge到本地：  
+  `git pull github master`  
+  <mark>在实际使用中，git fetch 更安全一些。</mark>  
