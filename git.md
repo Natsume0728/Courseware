@@ -12,15 +12,24 @@
     1. 输入":wq",按回车键即可  
 
 + 
-
-```git
+  
+  ```git
     ssh: connect to host github.com port 22: Connection timed out  
     fatal: Could not read from remote repository.  
     Please make sure you have the correct access rights  
     and the repository exists.
 ```
-
 利用ssh 及命令`git clone...`下载GitHub上的仓库报上述错误，且ssh公钥已在GitHub保存，经 {==`ssh -T git@github.com`==}测试ssh是否配置成功，同样报`ssh: connect to host github.com port 22:Connection timed out`错误，错误提示中有`22 端口`，暂未找到端口相关解决方式，可行解决方式：`Clone with HTTP`,命令`git clone https://github.com/Natsume0728/markdown.git`即可正常下载。  
+
++  
+```
+Administrator@PC-201906172306 MINGW32 /f/markdown (master)
+$ git pull
+fatal: refusing to merge unrelated histories//拒绝合并不相关历史
+```
+ 本地仓库不是从远程仓库clone来，执行pull操作时会出现此错误，本质上是因为本地仓库和远程仓库是两个独立的不相关仓库。  
+ 加上-allow-unrelated-histories参数可解决。  
+`$git pull origin master –allow-unrelated-histories`
 
 ## git文件状态`git status`  
 
