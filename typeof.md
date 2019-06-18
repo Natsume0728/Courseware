@@ -108,7 +108,7 @@ typeof (iData + ' Wisen'); // It will return 'string'
 - 正则表达式
 对正则表达式字面量的类型判断在某些浏览器中不符合标准：
 typeof /s/ === 'function'; // Chrome 1-12 , 不符合 ECMAScript 5.1
-typeof /s/ === 'object'; // Firefox 5+ , 符合 
+typeof /s/ === 'object'; // Firefox 5+ , 符合
 ECMAScript 5.1
 - 暂存死区
 在 ECMAScript 2015 之前，typeof总是保证为任何操作数返回一个字符串。但是，除了非提升，块作用域的let和const之外，在声明之前对块中的let和const变量使用typeof会抛出一个ReferenceError。这与未声明的变量形成对比，typeof会返回“undefined”。块作用域变量在块的头部处于“暂时死区”，直到被初始化，在这期间，如果变量被访问将会引发错误。  
