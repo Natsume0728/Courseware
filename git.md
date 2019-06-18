@@ -106,7 +106,7 @@ Git push
   - `git log --graph --oneline`git点线树单行显示，__commit id简写__。  
 ![--pretty=oneline](./img/git_008.jpg)
   - `git log --graph --oneline --all`__增加参数`--all`可显示所有分支的点线树__。
-  - `gitk`内置图形化工具，`git log`命令的可视化版本  ，同样可以加 __参数`--all`__。
+  - `gitk`内置图形化工具，`git log`命令的可视化版本  ，同样可以加 __参数`--all`__。  
 [git log命令的详细介绍](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)  
 
 ***
