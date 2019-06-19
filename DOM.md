@@ -19,7 +19,7 @@
       - 节点.lastChild
    1. 兄弟关系：2个属性
       - 元素.previousElementSibling
-      - 元素.nextElementSibling
+      - 元素.nextElementSibling  
 __元素树的优点__：不包含看不见的空字符，不会受到空字符的干扰。  
 __鄙视题__：遍历一个指定元素下的所有后代元素，找到符合条件的元素。
 
