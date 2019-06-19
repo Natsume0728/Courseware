@@ -65,8 +65,8 @@ __强调:__
    1. 用任意父元素调用  
 如果采用指定父元素，调用函数时必须是相对于父元素内的相对选择器  
 比如:  
-`document.querySelector("table>tbody td:last-child ")`
-`table.querySelector("tbody td:last-child")`
+`document.querySelector("table>tbody td:last-child ")`  
+`table.querySelector("tbody td:last-child")`  
 ~~`table.querySelector("table>tbody td:last-child ")`~~  
    2. 只能返回1个元素
    3. 不仅查找直接子元素，且在所有后代中查找
