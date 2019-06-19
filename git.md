@@ -25,17 +25,17 @@
 ## git文件状态`git status`  
 
 1. 在本地git仓库中新建 `001.html`文件 `002`目录  
-![Untracked files](./img/git_001.jpg)  
+![git_001.jpg](https://i.loli.net/2019/06/19/5d09c667346f355426.jpg)  
 文件001.html状态为:==Untracked files==(未监视)  
 若新建目录为空，`git.status`命令不会将这个目录显示在`Untracked files`中。  
 1. `git add [filename]or[dirname/]`后文件状态：==Changes to be committed==,==绿色字体显示new file==:  
-![changes to be committed](./img/git_002.jpg)  
+![git_002.jpg](https://i.loli.net/2019/06/19/5d09c77fda45b30041.jpg)  
 1. 修改文件001.html中的内容后执行`git status`命令，001.html文件状态为：==Changes not staged for commit==(文件已执行过`add`操作，理解为已纳入跟踪后做了修改，而未将修改后的文件提交到缓存区)，==红色字体显示modified==  
-![changes to be committed](./img/git_003.jpg)  
+![git_003.jpg](https://i.loli.net/2019/06/19/5d09c7bc54c6158274.jpg)  
 1. commit操作后  
-![changes to be committed](./img/git_004.jpg)  
+![git_004.jpg](https://i.loli.net/2019/06/19/5d09c7bb25f1d80936.jpg)  
 1. commit操作后再次修改文件内容  
-![changes to be committed](./img/git_005.jpg)  
+![git_005.jpg](https://i.loli.net/2019/06/19/5d09c7bb2de2b85471.jpg)  
 同样显示==Changes not staged for commit==状态，同样标为==红色modified==。  
 
 ## git命令（含Linux命令）  
@@ -96,11 +96,11 @@ Git push
 + `git branch -d dev`删除分支dev
 + `git branch -D dev`强制删除分支(若所删除分支中包含未合并信息，需要用参数-D强制删除)
 + `git log --graph`git点线树  
-![git log --graph](./img/git_006.jpg)  
+![git_006.jpg](https://i.loli.net/2019/06/19/5d09c814cab0e32273.jpg)
   + `git log --graph --pretty=oneline`git点线树单行显示，==commit id完整显示==。  
-![--pretty=oneline](./img/git_007.jpg)  
+![git_007.jpg](https://i.loli.net/2019/06/19/5d09c814ce5bf68988.jpg)  
   + `git log --graph --oneline`git点线树单行显示，==commit id简写==。  
-![--pretty=oneline](./img/git_008.jpg)
+![git_008.jpg](https://i.loli.net/2019/06/19/5d09c815bd46831344.jpg)  
   + `git log --graph --oneline --all`==增加参数`--all`可显示所有分支的点线树==。
   + `gitk`内置图形化工具，`git log`命令的可视化版本  ，同样可以加==参数`--all`。==  
 [git log命令的详细介绍](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)  
