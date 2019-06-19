@@ -3,7 +3,7 @@
 :laughing:
 
 - [git命令](./git.md)
-- [git中分支合并Fast-forward和--no-ff模式](./merge-in-git.md)
+- [git中分支合并Fast-forward和--no-ff模式](./merge_in_git.md)
 - [构造函数的返回值问题](./构造函数的返回值.md)
 - [typeof返回值问题](./typeof.md)
 - [JS中原型链的理解](./原型链.md)
