@@ -1,4 +1,4 @@
-# :laughing: 目录
+# :mahjong: 目录
 
 - [git命令](./git.md)
 - [git中分支合并Fast-forward和--no-ff模式](./merge_in_git.md)
