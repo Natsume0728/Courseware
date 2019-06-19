@@ -1,2 +1,2 @@
 # markdown
-[内部链接](markdown/git.md)
+[内部链接](git.md)
