@@ -5,7 +5,7 @@
   - [修改](###修改(3种方法))  
   - [添加/删除](###添加/删除)  
 - [HTML_DOM常用对象](##HTML_DOM常用对象)  
-  - [Image对象](###image对象)
+  - [Image对象](###_image对象)
   - [Select对象](###Select对象)
   - [Option对象](###Option对象)
   - [Table对象](###Table对象)
