@@ -13,9 +13,9 @@
 - [BOM](#bom)
   - [window](#window(充当了3个角色))
   - [打开窗口](#打开窗口(4种方法))
-  - [window.history](#window.history)
-  - [window.location](#window.location)
-  - [window.navigator](#window.navigator)
+  - [window.history](#history)
+  - [window.location](#location)
+  - [window.navigator](#navigator)
 
 ## DOM  
 
