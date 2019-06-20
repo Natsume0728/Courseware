@@ -243,7 +243,7 @@ a.innerHTML="go to tmooc";
 或者:  
 孩子.parentNode.removeChild(孩子)
 
-## HTML DOM常用对象
+## HTML_DOM常用对象
 
 >HTML DOM是对原有DOM函数和对象的简化
 HTML DOM 对一些常用的元素对象也提供了简化的函数和属性
@@ -427,9 +427,9 @@ ES标准 | W3C标准 | 没有标准
     _blank: 空白，就是不指定新窗口名，浏览器会自动在底层分配，保证不重复。  
     结果: 不限制打开的新窗口个数  
 
-### window.history
+### history
 
->保存当前窗口打开后，成功访问过的url的历史记录数组
+>window.history保存当前窗口打开后，成功访问过的url的历史记录数组
 
 当前窗口只要成功访问过一个url，url就会被push到history中保存。  
 能否前进后退，取决于现在正在看的url，在history前后是否有其他已经浏览过的url  
@@ -441,9 +441,9 @@ ES标准 | W3C标准 | 没有标准
 - 刷新: history.go(0)
 - 后退两步: history.go(-2)
 
-### window.location
+### location
 
->专门保存地址栏中url信息的对象，并提供了打开新链接的方法
+>window.location 专门保存地址栏中url信息的对象，并提供了打开新链接的方法
 
 - 属性:  
  可分段获得url的各个组成部分(协议 主机/IP 端口 相对路径):  
@@ -463,9 +463,9 @@ ES标准 | W3C标准 | 没有标准
      location.replace("新url")
   3. 刷新: location.reload();
 
-### window.navigator
+### navigator
 
->保存浏览器配置信息的对象  
+>window.navigator 保存浏览器配置信息的对象  
 
 __鄙视题:__ 如何判断正在使用的浏览器的名称和版本号?  
 userAgent: 保存浏览器名称和版本号的字符串  
