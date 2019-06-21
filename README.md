@@ -1,7 +1,10 @@
 # :mahjong: 目录
 
-- [git命令](./git.md)
-- [git中分支合并Fast-forward和--no-ff模式](./merge_in_git.md)
+- [git相关](./Git相关)
+  - [git命令](.Git相关/git.md)
+  - [git中diff命令](./Git相关/git中diff命令.md)
+  - [远程分支与本地分支的跟踪与同步](./Git相关/远程分支与本地分支的跟踪与同步.md)
+  - [git中分支合并Fast-forward和--no-ff模式](./Git相关/merge_in_git.md)
 - [构造函数的返回值问题](./构造函数的返回值.md)
 - [typeof返回值问题](./typeof.md)
 - [JS中原型链的理解](./原型链.md)
