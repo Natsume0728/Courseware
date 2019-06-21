@@ -45,23 +45,24 @@ and the repository exists.
 
 ```git
 Administrator@PC-201906172306 MINGW32 /f/markdown (dev)
-$ git push origin dev
-Enumerating objects: 6, done.
-Counting objects: 100% (6/6), done.
+$ git push
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
 Delta compression using up to 4 threads
 Compressing objects: 100% (4/4), done.
-Writing objects: 100% (4/4), 904 bytes | 904.00 KiB/s, done.
+Writing objects: 100% (4/4), 1.44 KiB | 739.00 KiB/s, done.
 Total 4 (delta 2), reused 0 (delta 0)
 remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To github.com:Natsume0728/markdown.git
-   ae79b93..522b7d4  dev -> dev
-Enumerating objects: 6, done.
-Counting objects: 100% (6/6), done.
+   522b7d4..5b282f4  dev -> dev
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
 Delta compression using up to 4 threads
 Compressing objects: 100% (4/4), done.
-Writing objects: 100% (4/4), 904 bytes | 904.00 KiB/s, done.
+Writing objects: 100% (4/4), 1.44 KiB | 739.00 KiB/s, done.
 Total 4 (delta 2), reused 0 (delta 0)
 remote: Powered By Gitee.com
 To gitee.com:natsume0728/markdown.git
-   ae79b93..522b7d4  dev -> dev
+   522b7d4..5b282f4  dev -> dev
+
 ```
