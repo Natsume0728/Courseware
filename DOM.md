@@ -1,15 +1,59 @@
-# DOM
+# DOM &nbsp; HTML DOM常用对象 &nbsp; BOM
 
-## 查找元素(4种方法)
+- [DOM](#dom)  
+  - [查找元素](#查找元素)  
+  - [修改](#修改)  
+  - [添加/删除](#添加和删除)  
+- [HTML_DOM常用对象](#html_dom常用对象)  
+  - [Image对象](#image对象)
+  - [Select对象](#select对象)
+  - [Option对象](#option对象)
+  - [Table对象](#table对象)
+  - [Form对象](#form对象)
+- [事件](#事件)
+  - [绑定事件处理函数](#绑定事件处理函数)
+  - [事件模型](#事件模型)
+  - [事件对象](#事件对象)
+- [BOM](#bom)
+  - [window](#window)
+  - [打开窗口](#打开窗口)
+  - [window.history](#history)
+  - [window.location](#location)
+  - [window.navigator](#navigator)
 
-### 1. 不需要查找就可以直接获得的元素
+## DOM  
+
+<blockquote>DOM<br>  
+专门操作网页内容的一套对象和函数的集合,<br>
+只要操作网页的内容都用DOM,<br>
+DOM其实是一套对象和函数的标准——W3C制定,<br>
+统一了所有浏览器开发网页内容的标准,几乎所有浏览器100%兼容DOM标准。
+<blockquote>DOM 树<br>  
+内存中，保存当前网页中所有内容的树形结构<br>
+树形结构是最直观的存储上下级包含关系的结构。<br>  
+而网页中的所有元素内容，都是上下级包含关系的。  
+<blockquote>DOM树长什么样？<br>
+当浏览器读到网页时，先在内存中创建网页的根节点对象: documen<br>
+浏览器按从上到下的顺序读取网页内容，每读到一项网页内容，就创建一个节点对象，并挂到指定父节点下。
+</blockquote></blockquote></blockquote>
+
+ECMAScript|DOM|BOM
+:---:|:---:|:---:
+核心语法 | 操作网页内容 | 操作浏览器窗口
+ES标准 | W3C标准 | 没有标准
+
+### 查找元素
+
+>有4中查找元素的方法
+
+#### 1. 不需要查找就可以直接获得的元素
 
 - document:    根节点对象
 - \<html>根元素:    document.documentElement
 - \<head>元素:    document.head
 - \<body>元素:    document.body
 
-### 2. 按节点间关系查找  
+#### 2. 按节点间关系查找  
 
 何时：如果已经获得一个节点对象，找周围附近的节点对象时  
 节点树：包含 __所有网页内容__ 的完整树结构  
@@ -27,7 +71,7 @@
 __元素树的优点__：不包含看不见的空字符，不会受到空字符的干扰。  
 __鄙视题__：遍历一个指定元素下的所有后代元素，找到符合条件的元素。
 
-### 3. 按HTML特征查找
+#### 3. 按HTML特征查找
 
 按节点间关系查找的缺点：必须先有一个节点，才能找周围的关系。  
 解决办法：在还未获得元素的情况下，执行首次查找，用按HTML特征查找。  
@@ -57,7 +101,7 @@ __强调:__
    1. 只能用document调用
    2. 返回多个元素组成的类数组对象
 
-### 4. 按任意选择器查找元素
+#### 4. 按任意选择器查找元素
 
 1. 仅查找一个符合条件的元素:  
 var elem=任意父元素.querySelector("选择器")  
@@ -83,11 +127,13 @@ __总结:__
 1. 如果只要一个条件，就能找到想要的元素时，首选按HTML特征查找
 2. 如果查找条件复杂时，需要多个条件才能找到想要的元素时，就首选按选择器查找——简单！
 
-----------------------------------------------------
+---
 
-## 修改(3种方法)
+### 修改
 
-### 1. 内容
+>有3种修改的方式
+
+#### 1. 内容
 
 1. 获取或设置元素开始标签到结束标签之间的原始HTML代码片段: 元素.innerHTML  
 1. 获取或设置元素开始标签到结束标签之间的纯文本内容: 元素.textContent  
@@ -96,7 +142,7 @@ __总结:__
    2. 转义符号翻译为正文
 1. 获取或设置表单元素的值:表单元素.value
 
-### 2. 属性(3大类)
+#### 2. 属性(3大类)
 
 1. HTML标准属性: HTML标准中规定的属性
      比如: title, class, href, src, target, id  
@@ -140,7 +186,7 @@ __解决办法:__ 今后，凡是使用class属性，一律更名为className,�
          - 比如: var m=img.getAttribute("data-m") &nbsp;m="m.png"
 __强调:__ 因为自定义扩展属性，只出现在页面中，不在内存中，所以，只能用getAttribute()&nbsp; setAttribute()...来访问，不能用.访问。
 
-### 3. 样式
+#### 3. 样式
 
 修改内联样式: 元素.style.css属性="值"  
 
@@ -155,3 +201,381 @@ __强调:__
 1. 如果css属性值带单位，则必须加单位！  
 问题: 如果批量修改多个css属性时，使用style一次只能改一个css属性。代码会很繁琐。  
 解决办法: __只要批量修改元素的样式都要先将多个css属性定义为一个class，再用.className="class名"一句话批量应用。__
+
+### 添加和删除
+
+#### 添加一个新元素(3步)
+
+1. 先创建一个空元素:
+var a=document.createElement("标签名")  
+结果: \<a>\</a>
+2. 设置空元素的关键属性:  
+a.href="<http://tmooc.cn">  
+a.innerHTML="go to tmooc";  
+结果:\<a href="<http://tmooc.cn">go> to tmooc\</a>
+3. 将新元素挂载到DOM树上的指定位置上:
+   1. 在指定父元素末尾追加子元素  
+父元素.appendChild(新元素)  
+比如:`body.appendChild(a)`将a元素追加到body元素下子元素的末尾  
+   2. 插入到现有一个元素之前  
+父元素.insertBefore(新元素, 现有元素)  
+比如:`body.insertBefore(a, h1)`将a插入到h1之前
+   3. 替换现有的一个元素  
+父元素.replaceChild(新元素, 现有元素)  
+比如:`body.replaceChild(a, h1)`用a替换body下的h1  
+
+         __优化:尽量减少操作DOM树的次数__  
+         WHY:每操作一次DOM树，浏览器都要重绘整个页面，效率很低！会造成闪屏  
+         HOW:2种方式
+      1. 如果同时添加父元素和子元素时，应该先在内存中将所有子元素添加到父元素中。最后再一次性将父元素整体添加到DOM树——只重绘一次
+      2. 如果父元素已经在页面上了，要添加多个平级子元素。  
+借助文档片段:  
+什么是: 内存中临时保存多个平级子元素的虚拟父元素  
+何时: 如果父元素已经在页面上了，要添加多个平级子元素  
+ 如何: 3步  
+             1. 临时创建文档片段托盘对象:  
+      `var frag=document.createDocumentFragment();`  
+             2. 将子元素临时添加到文档片段对象中:  
+      `frag.appendChild(子元素)`  
+             3. 将文档片段添加到页面中指定的父元素下  
+      `父元素.appendChild(frag)`  
+      结果: frag将子元素都送到父元素指定位置后，就释放了！不占用页面空间。
+
+#### 删除
+
+任意父元素.removeChild(孩子)  
+或者:  
+孩子.parentNode.removeChild(孩子)
+
+## HTML_DOM常用对象
+
+>HTML DOM是对原有DOM函数和对象的简化
+HTML DOM 对一些常用的元素对象也提供了简化的函数和属性
+比如: \<img> \<select>\<option>  \<table>...\</table>  \<form>...  
+
+### Image对象
+
+>就是一个\<img>元素  
+
+ 唯一的简化，就是在创建\<img>元素时:  
+ `var img=new Image();`  
+ __强调:__ 通常只要两个元素可以用new简写: \<img> \<option>  
+ 其它元素依然需要document.createElement()创建  
+
+### Select对象
+
+>就是一个\<select>元素  
+
+简化:  
+
+- 属性:  
+    .selectedIndex  获得select下选中的option的下标位置  
+    .options 获得select下所有option元素的集合  
+    .options.length 获得select下所有option元素的个数  
+    .length <==> .options.length  
+- 方法:  
+    .add(option) <==> .appendChild(option) 追加一个option  
+    问题:  
+    .add( )不支持frag  
+    .appendChild( )支持frag  
+    .remove(i) 移除i位置的一个option  
+
+### Option对象
+
+>就是一个option元素
+
+&nbsp;&nbsp; &nbsp;唯一的简化，就是在创建时:  
+&nbsp;&nbsp; &nbsp;`var option=new Option(内容文本, value)`  
+&nbsp;&nbsp; &nbsp;比如: var option=new Option("-请选择-",0)  
+&nbsp;&nbsp; &nbsp;结果: \<option value="0">-请选择-\</option>  
+&nbsp;&nbsp; &nbsp;vs 原DOM函数:  
+&nbsp;&nbsp; &nbsp;`var option=document.createElement("option")`  
+&nbsp;&nbsp; &nbsp;`option.value=0;`  
+&nbsp;&nbsp; &nbsp;`option.innerHTML="-请选择-"`  
+
+### Table对象
+
+>代表页面上一个\<table>元素
+
+- Table对象直接管着行分组:  
+
+  - 创建行分组: table.createTHead()
+             table.createTBody()
+             table.createTFoot()
+  - 删除行分组: table.deleteTHead()
+             table.deleteTFoot()
+  - 获得行分组:__table.tHead__
+              __table.tFoot__
+              __table.tBodies[i]__
+
+- 行分组管着行:  
+
+  - 创建行:  
+  var tr=tbody.insertRow(i)  
+  在tbody中第i行位置插入一个新行,并返回刚添加的新行对象，便于后续对新 行中添加格和数据。  
+  __强调:insertRow()不但创建新行，而且立刻将新行添加到tbody中__。  
+  vs 原DOM: 2步:  
+  var tr=document.createElement("tr")  
+  tbody.appendChild(tr)  
+  __固定套路:__  
+    - __在tbody开头插入一个新行__  
+    var tr=tbody.insertRow(0)
+    - __在tbody结尾追加一个新行__  
+    var tr=tbody.insertRow( )
+  - 删除行:  
+  tbody.deleteRow(i) 删除tbody中i位置的行  
+  问题:  
+  __i 要求是行在tbody内部的相对下标位置,而一个tr对象的相对下标位置无法自动获得,  可以自动获得的tr.rowIndex是相对于整个表中的下标位置。
+  和tbody.deleteRow()的要求错位。__  
+  解决:  
+  __只要删除行的标准写法都是: table.deleteRow(tr.rowIndex)  
+  因为.前的主语变成整个table，所以deleteRow( )要求就变为使用整个表中  的下标，就和tr.rowIndex的意义相符了。__
+  - 获取行: tbody.rows[i]  
+
+- 行管着格:  
+  - 添加格:  
+    var td=tr.insertCell(i)  
+    __通常都是在行末尾追加一格:var td=tr.insertCell()__  
+    VS 旧DOM:  
+    var td=document.createElement("td");  
+    tr.appendChild(td);  
+  - 删除格: tr.deleteCell(i)
+  - 获取格: tr.cells[i]
+
+### Form对象
+
+>代表一个\<form>元素
+
+获取表单对象: 其实也不需要查找，就可直接获得。  
+因为表单对于所在的网页极其重要，所以网页就将本页面内的\<form>元素都保存在一个forms集合中。  
+可用[i]获取某一个表单对象 var form = document.forms[i]  
+比如:  
+如果一个页面中只有一个\<form> 则 var form=document.forms[0]  
+
+- 属性:  
+    form.elements  获得表单中所有表单元素的集合.  
+    form.elements.length 获得表单中所有表单元素的个数.  
+    form.length <==> form.elements.length
+表单元素对象:  比如: \<input>  \<select>  \<textarea> \<button>  
+   获取表单中的表单元素:  
+
+  - 普通方法: var 表单元素=form.elements[id|i|name]  
+    比如:  
+    - 获得form中name=username的input元素  
+        var txtName=form.elements["username"]  
+    - 获得form中的倒数第二个表单元素——input type=button保存按钮  
+        var btnSubmit=form.elements[form.length-2];  
+  - 简写: 如果一个表单元素有name属性，可直接用.name方法获得:  
+        var txtName=form.elements["username"]  
+           可简写为: form.username;  
+- 方法: 表单元素.focus() 让当前表单元素自动获得焦点  
+
+---
+
+## 事件
+
+>浏览器自动触发的或用户手动触发的页面内容、状态的改变.  
+
+__事件处理函数:__ 当事件发生时自动调用的函数.  
+__强调: 事件处理函数中的this永远指当前触发事件的元素__  
+
+### 绑定事件处理函数
+
+每个元素对象上都有一批on开头的特殊属性，这些属性会在事件发生时自动触发对应的属性。  
+如果希望事件发生时，按照我们的意愿执行操作，就要提前将一个自定义函数赋值给on开头的对应属性保存起来,当事件发生时，会自动调用提前保存的函数。  
+__如何绑定:__  
+
+- 在HTML中:  
+`\<ANY onclick="js语句/函数调用">...\<ANY>`  
+`function 事件处理函数( ){ ... }`  
+问题: 不符合内容与行为分离的原则，不便于维护和重用  
+- 在js中用赋值方式:  
+`元素对象.onclick=function(){`  
+`... this 指当前触发事件的元素对象`  
+`}`
+问题: 一个事件只能绑定一个处理函数，不灵活！  
+- 在js中用添加事件监听对象的方式:  
+`元素对象.addEventListener("事件名",处理函数)`  
+__强调: 真正的事件名是没有on前缀的__  
+__比如: click  &#160; change &#160; focus &#160; blur &#160; load__  
+原理:  
+比如:  
+`btnShoot.addEventListener("click",function(){`  
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`发射普通子弹`  
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`})`  
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`发射跟踪导弹`  
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`})`  
+结果: 单击btnShoot，会先后发射两种子弹  
+原理:  
+
+>其实，浏览器中有一个巨大的事件监听队列  
+我们为每个元素绑定的事件监听对象都会被添加到监听队列中。  
+当事件发生时，浏览器采用遍历监听队列的方式，找到符合条件的事件监听对象，并执行其中的理函数  
+找到几个符合条件的，就执行几个符合条件的  
+
+__移除事件监听对象:__  
+`元素对象.removeEventListener("事件名", 处理函数)`  
+__强调: 移除监听对象时，元素、事件名和处理函数都要和添加时完全相同！__  
+__坑: 如果一个处理函数可能被移除，则添加监听时，就要使用有名称的函数。不能使用匿名函数__  
+
+### 事件模型
+
+>从触发事件开始，到所有事件处理函数执行完，所经历的过程,包括三个阶段:  
+
+   1. 捕获: 由外(document)向内(实际触发事件的元素)记录各级父元素上绑定的相同事件的处理函数,__只记录，不执行__。
+   1. 目标触发: 优先触发目标元素上的处理函数  
+      目标(target)元素: 最初实际触发事件的那个元素
+   1. __冒泡: 由内向外，依次触发各级父元素上收集的相同事件的处理函数__。
+
+### 事件对象  
+
+>在事件发生时，浏览器自动创建的，收集事件相关信息的对象。并提供了改造事件的函数.  
+
+2种使用场景：
+
+- 想获得事件信息时: 点了那个元素，点在什么位置...  
+- 想改造事件默认的行为:__取消冒泡！__  
+  如何:  
+   1. 获取: 不用自己创建  
+      事件对象总是作为处理函数的第一个实参默认传入！  
+      我们只要在定义处理函数时，提前定义一个形参接住  
+      比如:  
+      btn.onclick=function(e){  
+            //当事件发生时: e自动收到浏览器给的event对象  
+          }  
+          btn.addEventListener("click",function(e){ ... })  
+   2. 包括哪些功能?  
+      - __取消冒泡: e.stopPropagation()__  
+      什么是: 当前元素处理函数执行完，停止继续执行父元素上的处理函数。  
+      何时: 只要不希望触发父元素上的处理函数时，都要取消冒泡。  
+      - __事件委托/事件代理:__  
+      优化: 尽量减少事件监听的个数。  
+      为什么: 浏览器触发事件，是采用遍历监听数组中每个监听对象来匹配并触发处理函数的。数组中监听对象多，遍历速度慢，数组中监听对象少，遍历快！  
+      何时: 多个平级子元素，要绑定相同的事件处理函数时，只要在父元素绑定一次即可  
+      如何: 只要在父元素上统一绑定一次事件处理函数即可。  
+      点击子元素时，会自动冒泡到父元素上，执行提前委托好的处理函数。  
+      __坑1: 如何获得最初触发事件的目标元素？__  
+        错误:使用this  
+        因为事件绑在父元素上，执行时，也是冒泡到父元素才执行的。所以，__事件委托中的this一律指父元素。__  
+        正确:__e.target 记录了事件最初触发的目标元素,不随冒泡而改变__  
+        坑2:__所有点击的元素都是想要的吗？不是!__  
+        在正式执行逻辑前，都要先判断目标元素是否是想要的。  
+        哪些属性可作为区分的条件:(节点名，标签名) nodeName, className,...  
+      - __阻止默认行为: 有些元素自带默认行为。__  
+      何时: 如果元素自带的默认行为不是我们想要的，就可用 __e.preventDefault( )__ 来阻止默认行为的发生  
+      比如: bootstrap中,\<a href="#content1" data-toggle="tab">  
+      点a时，不但执行绑定的操作，还会附加修改地址栏中的url(后加#content1锚点地址)  
+      所以，__只要用a当做普通按钮用时，都要阻止默认行为。__
+
+      - __鼠标坐标: 事件对象在事件发生时，就自动获得了鼠标在屏幕中的位置。__  
+      包括3组:  
+        1. 相对于屏幕左上角: e.screenX &#160; e.screenY
+        2. 相对于浏览器文档显示区左上角: e.clientX &#160; e.clientY  
+        3. 相对于当前元素左上角: e.offsetX &#160; e.offsetY  
+
+---
+
+## BOM
+
+>Browser Object Model:操作浏览器窗口的对象和函数  
+
+ECMAScript|DOM|BOM
+:---:|:---:|:---:
+核心语法 | 操作网页内容 | 操作浏览器窗口
+ES标准 | W3C标准 | 没有标准
+问题: 没有标准——极大的兼容性问题，所以用的越来越少  
+
+### window
+
+>充当了3个角色
+
+1. 顶替了ES标准中的global，充当全局作用域对象  
+比如:  
+浏览器中: var a=10;  window.a 输出10  
+再比如:  
+      window.parseInt()  
+      window.parseFloat()  
+      window.Array  
+      window.Date  
+      window.RegExp  
+2. 包含所有ES,DOM,BOM的对象和函数  
+ 比如:  
+ window.document  
+ window.document.getElementById( )  
+3. 还代表当前正在打开的窗口  
+   比如:  
+   window.close( ) 是关闭当前窗口的意思  
+   新chrome浏览器禁止随意关闭窗口，弹出黄色警告  
+   再比如:  
+   window.outerWidth 可获得当前窗口的总宽度  
+   window.outerHeight 可获得当前窗口的总高度  
+
+### 打开窗口
+
+>打开窗口的方式有4种
+
+  1. 在当前窗口打开新链接，可后退  
+    html: \<a href="url" target="_self">  
+    js: window.open("url","_self")  
+  2. 在当前窗口打开新链接，禁止后退(在一个窗口内，反复打开多个链接时才能实现)  
+    js: location.replace("新url")  
+    原理: 用新的url地址，替换history中旧的地址，保证history中只有一条url，以此禁止后退  
+  3. 在新窗口打开新链接，可同时打开多个  
+    html: \<a href="url" target="_blank">  
+    js: window.open("url","_blank")  
+  4. 在新窗口打开新链接，只能打开一个  
+    html: \<a href="url" target="自定义新窗口名">  
+    js: window.open("url","自定义新窗口名")  
+    原理: 其实，每个窗口在浏览器内存中都有一个唯一的名字，用来标识这个窗口。  
+    浏览器规定，相同名称的窗口，只能打开一个。  
+    新打开的同名窗口会覆盖现有的重名窗口  
+    tips:  
+    如果打开链接时，使用自定义窗口名，则反复点击链接，只能打开一个  
+    有两个预定义窗口名:  
+    _self: 自动获取当前窗口自己的名字给新窗口  
+    结果: 新窗口会覆盖当前窗口  
+    _blank: 空白，就是不指定新窗口名，浏览器会自动在底层分配，保证不重复。  
+    结果: 不限制打开的新窗口个数  
+
+### history
+
+>window.history保存当前窗口打开后，成功访问过的url的历史记录数组
+
+当前窗口只要成功访问过一个url，url就会被push到history中保存。  
+能否前进后退，取决于现在正在看的url，在history前后是否有其他已经浏览过的url  
+只开放了一个函数: history.go(i)  
+比如:  
+
+- 前进一步: history.go(1)
+- 后退一步: history.go(-1)
+- 刷新: history.go(0)
+- 后退两步: history.go(-2)
+
+### location
+
+>window.location 专门保存地址栏中url信息的对象，并提供了打开新链接的方法
+
+- 属性:  
+ 可分段获得url的各个组成部分(协议 主机/IP 端口 相对路径):  
+  完整url: location.href  
+  `<http://127.0.0.1:5500/BOM/10_location.html?username=dingding&pwd=123456&favs=running#top>`<br>
+  协议: location.protocol  
+  主机+端口: location.host  
+  主机: location.hostname  
+  端口: location.port  
+  相对路径: location.pathname  
+  查询字符串: location.search  
+   ?username=dingding&pwd=123456&favs=running  
+  锚点地址: location.hash  #top
+- 方法:  
+  1. 在当前窗口打开新链接，可后退: location.href="新url"
+  2. 在当前窗口打开新链接，禁止后退:  
+     location.replace("新url")
+  3. 刷新: location.reload();
+
+### navigator
+
+>window.navigator 保存浏览器配置信息的对象  
+
+__鄙视题:__ 如何判断正在使用的浏览器的名称和版本号?  
+userAgent: 保存浏览器名称和版本号的字符串  
