@@ -25,8 +25,12 @@ gitk工具显示如下：
 
 tip:  
 
-- 快进模式合并分支命令`git merge dev`,git是把`master`指向`dev`当前的commit(且可以看出此种模式的merge并没有产生新的commit)就完成了合并，所以速度很快，但是有缺点，删除分支后，会丢掉分支信息，==后期从分支历史上看不出曾经做过合并==;  
-- 禁用快进模式合并分支命令`git merge --no-ff -m <message> dev2`，此种模式git会在merge时生成一个新的commit(所以需要-m参数),这样，__删除分支后，从分支历史上仍可以看出曾经做过合并__。  
+- 快进模式合并分支命令`git merge dev`,  
+git是把`master`指向`dev`当前的commit(且可以看出此种模式的merge并没有产生新的commit)就完成了合并，所以速度很快。  
+但是有缺点，删除分支后，会丢掉分支信息，__后期从分支历史上看不出曾经做过合并__;  
+- 禁用快进模式合并分支命令`git merge --no-ff -m <message> dev2`，  
+此种模式git会在merge时生成一个新的commit(所以需要-m参数),  
+这样，__删除分支后，从分支历史上仍可以看出曾经做过合并__。  
 git点线树和gitk工具显示如下：  
 ![git_015.jpg](https://i.loli.net/2019/06/19/5d09c8a9b600a92263.jpg)  
 ![git_016.jpg](https://i.loli.net/2019/06/19/5d09c8a9a162879558.jpg)  
