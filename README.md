@@ -14,7 +14,7 @@
 - [JS中原型链的理解](./原型链.md)
 - [JS中hasOwnProperty属性](./hasOwnProperty.md)
 - [regexp](./regexp.pptx)
-- [String类型种的正则函数](./String类型种的正则函数.md)
+- [String类型中的正则函数](./String类型种的正则函数.md)
 - [RegExp对象](./RegExp对象.md)
 - [OOP](./OOP.md)
 - [Function对象](./Function对象.md)

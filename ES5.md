@@ -75,13 +75,14 @@ HOW: 2大块内容:
        何时: 只要使用灵活的自定义规则保护属性时，都要请保镖。  
        如何: 3步:  
        <ol>
-        <li> 前提: 先定义一个半隐藏的受保护的数据属性，实际存储属性值。且数据属性名不要用正式属性名，最好_开头，以示区分。  
-          Object.defineProperty(eric,"_age",{  
-            value: 26,  
-            writable:true, //可以改  
-            enumerable:false, //半隐藏  
-            configurable:false //双保险  
-          })</li>  
+        <li> 前提: 先定义一个半隐藏的受保护的数据属性，实际存储属性值。<br>  
+        且数据属性名不要用正式属性名，最好_开头，以示区分。 <br>  
+          Object.defineProperty(eric,"_age",{ <br>  
+            value: 26,<br>  
+            writable:true, //可以改<br>  
+            enumerable:false, //半隐藏<br>  
+            configurable:false //双保险<br>  
+          })</li><br>  
         <li> 请保镖: 一请，就是一对儿<br>
           一个保镖叫get函数, 专门负责从受保护的数据属性中取值  <br>
           另一个保镖叫set函数，专门负责将要修改的值，保存回数据属性中。  <br>
@@ -96,7 +97,7 @@ HOW: 2大块内容:
                 throw Error("年龄必须介于18~65之间")  
               }  
             }  
-          })  </pre></li>
+          })  </pre> </li>
         <li> 保镖何时发挥作用:  <br>
          当试图用保镖获取属性值时，自动调用get()<br>
          比如: console.log(eric.age)<br>
