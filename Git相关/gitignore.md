@@ -17,7 +17,7 @@
 - 执行下面命令可以解决 .gitignore 不生效问题。
 
 ```git
-git rm -r –cached .
+git rm -r –-cached .
 git add .  
 git commit -m "update gitignore"  
 ```
