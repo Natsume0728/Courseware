@@ -58,9 +58,9 @@ jQuery 是 **第三方** 开发的执行 DOM 操作的 **极简化** 的 **函�
     强调: 为了将jQuery家孩子和DOM家孩子区分，jQuery家孩子的变量都要以$开头——不是必须。
    jQuery 家的孩子，就可以调用原型对象中的简化版函数操作自己内部封装的找到的 DOM 元素了。
    对 jQuery 家孩子调用简化版函数，等效于自动对内部封装的 DOM 元素调用原生的函数。
-   比如: $btn.click() => 
+   比如: $btn.click() =>  
          会被自动转换为 => btn.addEventListener("click",...)
-  强调: 原DOM中事件处理函数中的this，获得是DOM家的孩子。不能直接使用jQuery家的函数。所以: 
+  强调: 原DOM中事件处理函数中的this，获得是DOM家的孩子。不能直接使用jQuery家的函数。所以:  
    必须先var $btn=\$(this)，将 this 放入一个 jQuery 家的孩子中，才能使用 jQuery 家简化版函数。
    强调: jQuery 家的函数和对象，与 DOM 一定不能混用！
    决定用 jQuery，就要通篇都用 jQuery。
@@ -251,7 +251,7 @@ $btn.addClass("down")
 3. 删除: \$元素.remove();
 4. 克隆元素: \$元素.clone();
 
-## 事件绑定:
+## 事件绑定
 
 DOM 中: .addEventListener("事件名", 处理函数)
 .removeEventListener("事件名", 处理函数)
