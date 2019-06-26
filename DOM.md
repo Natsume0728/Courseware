@@ -155,9 +155,9 @@ DOM其实是一套对象和函数的标准——W3C制定,<br>
    **强调:**
    1. 用任意父元素调用，缩小范围
    2. 可返回所有符合条件的元素的类数组对象
-   3. 不仅查找直接子元素，且在所有后代中查找  
+   3. 不仅查找直接子元素，且在所有后代中查找
 
-缺点: __用选择器查找，效率不如用 HTML 特征查找高__。
+缺点: **用选择器查找，效率不如用 HTML 特征查找高**。
 
 **总结:**
 
@@ -178,7 +178,7 @@ DOM其实是一套对象和函数的标准——W3C制定,<br>
    1. 去掉了内嵌的标签
    2. 转义符号翻译为正文
 1. 获取或设置表单元素的值:  
-表单元素.value  
+   表单元素.value
 
 #### 2. 属性(3 大类)
 
@@ -220,7 +220,7 @@ DOM其实是一套对象和函数的标准——W3C制定,<br>
       - 用程序动态设置: 只能用 setAttribute，不能用.  
         比如: img.setAttribute("data-m","m.png")  
         结果:\<img data-m="m.png"> 2. 修改自定义扩展属性: 也只能用 setAttribute()
-      3. 读取自定义扩展属性的值: 只能用 getAttibute()
+   3. 读取自定义扩展属性的值: 只能用 getAttribute()
       - 比如: var m=img.getAttribute("data-m") &nbsp;m="m.png"  
         **强调:** 因为自定义扩展属性，只出现在页面中，不在内存中，  
         所以，只能用 getAttribute()&nbsp; setAttribute()...来访问，不能用.访问。
@@ -245,43 +245,43 @@ DOM其实是一套对象和函数的标准——W3C制定,<br>
 
 #### 添加一个新元素(3 步)
 
-1.  先创建一个空元素:
-    var a=document.createElement("标签名")  
-    结果: \<a>\</a>
-2.  设置空元素的关键属性:  
-    a.href=`"http://tmooc.cn"`  
-    a.innerHTML="go to tmooc";  
-    结果:\<a href=`"http://tmooc.cn"`>go to tmooc\</a>
-3.  将新元素挂载到 DOM 树上的指定位置上:
+1. 先创建一个空元素:
+   var a=document.createElement("标签名")  
+   结果: \<a>\</a>
+2. 设置空元素的关键属性:  
+   a.href=`"http://tmooc.cn"`  
+   a.innerHTML="go to tmooc";  
+   结果:\<a href=`"http://tmooc.cn"`>go to tmooc\</a>
+3. 将新元素挂载到 DOM 树上的指定位置上:
 
-    1.  在指定父元素末尾追加子元素  
-        父元素.appendChild(新元素)  
-        比如:`body.appendChild(a)`将 a 元素追加到 body 元素下子元素的末尾
-    2.  插入到现有一个元素之前  
-        父元素.insertBefore(新元素, 现有元素)  
-        比如:`body.insertBefore(a, h1)`将 a 插入到 h1 之前
-    3.  替换现有的一个元素  
-        父元素.replaceChild(新元素, 现有元素)  
-        比如:`body.replaceChild(a, h1)`用 a 替换 body 下的 h1
+   1. 在指定父元素末尾追加子元素  
+      父元素.appendChild(新元素)  
+      比如:`body.appendChild(a)`将 a 元素追加到 body 元素下子元素的末尾
+   2. 插入到现有一个元素之前  
+      父元素.insertBefore(新元素, 现有元素)  
+      比如:`body.insertBefore(a, h1)`将 a 插入到 h1 之前
+   3. 替换现有的一个元素  
+      父元素.replaceChild(新元素, 现有元素)  
+      比如:`body.replaceChild(a, h1)`用 a 替换 body 下的 h1
 
-                 __优化:尽量减少操作DOM树的次数__
-                 WHY:每操作一次DOM树，浏览器都要重绘整个页面，效率很低！会造成闪屏
-                 HOW:2种方式
-              1. 如果同时添加父元素和子元素时，应该先在内存中将所有子元素添加到父元素中。最后再一次性将父元素整体添加到DOM树——只重绘一次
-              2. 如果父元素已经在页面上了，要添加多个平级子元素。
+**优化:尽量减少操作 DOM 树的次数**  
+ WHY:每操作一次 DOM 树，浏览器都要重绘整个页面，效率很低！会造成闪屏  
+HOW:2 种方式
 
-        借助文档片段:  
-        什么是: 内存中临时保存多个平级子元素的虚拟父元素  
-        何时: 如果父元素已经在页面上了，要添加多个平级子元素  
-         如何: 3 步
-
-        1.  临时创建文档片段托盘对象:  
-            `var frag=document.createDocumentFragment();`
-        2.  将子元素临时添加到文档片段对象中:  
-            `frag.appendChild(子元素)`
-        3.  将文档片段添加到页面中指定的父元素下  
-            `父元素.appendChild(frag)`  
-            结果: frag 将子元素都送到父元素指定位置后，就释放了！不占用页面空间。
+1. 如果同时添加父元素和子元素时，应该先在内存中将所有子元素添加到父元素中。  
+   最后再一次性将父元素整体添加到 DOM 树——只重绘一次
+2. 如果父元素已经在页面上了，要添加多个平级子元素。  
+   借助 **文档片段**:  
+    什么是: 内存中临时保存多个平级子元素的虚拟父元素  
+    何时: 如果父元素已经在页面上了，要添加多个平级子元素  
+    如何: 3 步
+   1. 临时创建文档片段托盘对象:
+      `var frag=document.createDocumentFragment();`
+   2. 将子元素临时添加到文档片段对象中:
+      `frag.appendChild(子元素)`
+   3. 将文档片段添加到页面中指定的父元素下
+      `父元素.appendChild(frag)`
+      结果: frag 将子元素都送到父元素指定位置后，就释放了！不占用页面空间。
 
 #### 删除
 
