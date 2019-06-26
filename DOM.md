@@ -4,12 +4,12 @@
   - [查找元素](#查找元素)
   - [修改](#修改)
   - [添加/删除](#添加和删除)
-- [HTML_DOM 常用对象](#html_dom常用对象)
-  - [Image 对象](#image对象)
-  - [Select 对象](#select对象)
-  - [Option 对象](#option对象)
-  - [Table 对象](#table对象)
-  - [Form 对象](#form对象)
+- [HTML DOM 常用对象](#html-dom-常用对象)
+  - [Image 对象](#image-对象)
+  - [Select 对象](#select-对象)
+  - [Option 对象](#option-对象)
+  - [Table 对象](#table-对象)
+  - [Form 对象](#form-对象)
 - [事件](#事件)
   - [绑定事件处理函数](#绑定事件处理函数)
   - [事件模型](#事件模型)
@@ -275,12 +275,12 @@ HOW:2 种方式
     什么是: 内存中临时保存多个平级子元素的虚拟父元素  
     何时: 如果父元素已经在页面上了，要添加多个平级子元素  
     如何: 3 步
-   1. 临时创建文档片段托盘对象:
+   1. 临时创建文档片段托盘对象:  
       `var frag=document.createDocumentFragment();`
-   2. 将子元素临时添加到文档片段对象中:
+   2. 将子元素临时添加到文档片段对象中:  
       `frag.appendChild(子元素)`
-   3. 将文档片段添加到页面中指定的父元素下
-      `父元素.appendChild(frag)`
+   3. 将文档片段添加到页面中指定的父元素下  
+      `父元素.appendChild(frag)`  
       结果: frag 将子元素都送到父元素指定位置后，就释放了！不占用页面空间。
 
 #### 删除
@@ -289,7 +289,7 @@ HOW:2 种方式
 或者:  
 孩子.parentNode.removeChild(孩子)
 
-## HTML_DOM 常用对象
+## HTML DOM 常用对象
 
 > HTML DOM 是对原有 DOM 函数和对象的简化
 > HTML DOM 对一些常用的元素对象也提供了简化的函数和属性
@@ -340,16 +340,17 @@ HOW:2 种方式
 > 代表页面上一个\<table>元素
 
 - Table 对象直接管着行分组:
-
-  - 创建行分组: table.createTHead()
-    table.createTBody()
-    table.createTFoot()
-  - 删除行分组: table.deleteTHead()
+  - 创建行分组:  
+     table.createTHead()  
+     table.createTBody()  
+     table.createTFoot()
+  - 删除行分组:  
+    table.deleteTHead()  
     table.deleteTFoot()
-  - 获得行分组:**table.tHead**
-    **table.tFoot**
+  - 获得行分组:  
+    **table.tHead**  
+    **table.tFoot**  
     **table.tBodies[i]**
-
 - 行分组管着行:
 
   - 创建行:  
@@ -367,7 +368,9 @@ HOW:2 种方式
   - 删除行:  
     tbody.deleteRow(i) 删除 tbody 中 i 位置的行  
     问题:  
-    **i 要求是行在 tbody 内部的相对下标位置,而一个 tr 对象的相对下标位置无法自动获得, 可以自动获得的 tr.rowIndex 是相对于整个表中的下标位置。
+    **i 要求是行在 tbody 内部的相对下标位置,  
+    而一个 tr 对象的相对下标位置无法自动获得,  
+    可以自动获得的 tr.rowIndex 是相对于整个表中的下标位置。
     和 tbody.deleteRow()的要求错位。**  
     解决:  
     **只要删除行的标准写法都是: table.deleteRow(tr.rowIndex)  
@@ -438,23 +441,20 @@ HOW:2 种方式
   `}`  
   问题: 一个事件只能绑定一个处理函数，不灵活！
 - 在 js 中用添加事件监听对象的方式:  
-  `元素对象.addEventListener("事件名",处理函数)`  
-  **强调: 真正的事件名是没有 on 前缀的**  
-  **比如: click &#160; change &#160; focus &#160; blur &#160; load**  
-  原理:  
-  比如:  
-  `btnShoot.addEventListener("click",function(){`  
-  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`发射普通子弹`  
-   &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`})`  
-  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`发射跟踪导弹`  
-  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;`})`  
-  结果: 单击 btnShoot，会先后发射两种子弹  
-  原理:
+   `元素对象.addEventListener("事件名",处理函数)`  
+   **强调: 真正的事件名是没有 on 前缀的**  
+   **比如: click &#160; change &#160; focus &#160; blur &#160; load**  
+   比如:  
+  `btnShoot.addEventListener("click",function(){发射普通子弹})`  
+  `btnShoot.addEventListener("click",function(){发射跟踪导弹})`  
+  结果: 单击 btnShoot，会先后发射两种子弹
 
-> 其实，浏览器中有一个巨大的事件监听队列  
-> 我们为每个元素绑定的事件监听对象都会被添加到监听队列中。  
-> 当事件发生时，浏览器采用遍历监听队列的方式，找到符合条件的事件监听对象，并执行其中的理函数  
-> 找到几个符合条件的，就执行几个符合条件的
+原理:
+
+> 其实，浏览器中有一个巨大的事件监听队列，  
+> 我们为每个元素绑定的事件监听对象都会被添加到监听队列中；  
+> 当事件发生时，浏览器采用遍历监听队列的方式，找到符合条件的事件监听对象，并执行其中的处理函数，  
+> 找到几个符合条件的，就执行几个符合条件的。
 
 **移除事件监听对象:**  
 `元素对象.removeEventListener("事件名", 处理函数)`  
@@ -465,10 +465,10 @@ HOW:2 种方式
 
 > 从触发事件开始，到所有事件处理函数执行完，所经历的过程,包括三个阶段:
 
-1.  捕获: 由外(document)向内(实际触发事件的元素)记录各级父元素上绑定的相同事件的处理函数,**只记录，不执行**。
-1.  目标触发: 优先触发目标元素上的处理函数  
-    目标(target)元素: 最初实际触发事件的那个元素
-1.  **冒泡: 由内向外，依次触发各级父元素上收集的相同事件的处理函数**。
+1. 捕获: 由外(document)向内(实际触发事件的元素)记录各级父元素上绑定的相同事件的处理函数,**只记录，不执行**。
+1. 目标触发: 优先触发目标元素上的处理函数  
+   目标(target)元素: 最初实际触发事件的那个元素
+1. **冒泡: 由内向外，依次触发各级父元素上收集的相同事件的处理函数**。
 
 ### 事件对象
 
@@ -480,43 +480,48 @@ HOW:2 种方式
 - 想改造事件默认的行为:**取消冒泡！**  
   如何:
 
-  1.  获取: 不用自己创建  
-      事件对象总是作为处理函数的第一个实参默认传入！  
-      我们只要在定义处理函数时，提前定义一个形参接住  
-      比如:  
-      btn.onclick=function(e){  
-       //当事件发生时: e 自动收到浏览器给的 event 对象  
-       }  
-       btn.addEventListener("click",function(e){ ... })
-  2.  包括哪些功能?
+  1. 获取: 不用自己创建  
+     事件对象总是作为处理函数的第一个实参默认传入！  
+     我们只要在定义处理函数时，提前定义一个形参接住  
+     比如:  
+     btn.onclick=function(e){  
+      //当事件发生时: e 自动收到浏览器给的 event 对象  
+      }  
+      btn.addEventListener("click",function(e){ ... })
+  2. 包括哪些功能?
 
-      - **取消冒泡: e.stopPropagation()**  
-        什么是: 当前元素处理函数执行完，停止继续执行父元素上的处理函数。  
-        何时: 只要不希望触发父元素上的处理函数时，都要取消冒泡。
-      - **事件委托/事件代理:**  
-        优化: 尽量减少事件监听的个数。  
-        为什么: 浏览器触发事件，是采用遍历监听数组中每个监听对象来匹配并触发处理函数的。数组中监听对象多，遍历速度慢，数组中监听对象少，遍历快！  
-        何时: 多个平级子元素，要绑定相同的事件处理函数时，只要在父元素绑定一次即可  
-        如何: 只要在父元素上统一绑定一次事件处理函数即可。  
-        点击子元素时，会自动冒泡到父元素上，执行提前委托好的处理函数。  
-        **坑 1: 如何获得最初触发事件的目标元素？**  
-         错误:使用 this  
-         因为事件绑在父元素上，执行时，也是冒泡到父元素才执行的。所以，**事件委托中的 this 一律指父元素。**  
-         正确:**e.target 记录了事件最初触发的目标元素,不随冒泡而改变**  
-         坑 2:**所有点击的元素都是想要的吗？不是!**  
-         在正式执行逻辑前，都要先判断目标元素是否是想要的。  
-         哪些属性可作为区分的条件:(节点名，标签名) nodeName, className,...
-      - **阻止默认行为: 有些元素自带默认行为。**  
-        何时: 如果元素自带的默认行为不是我们想要的，就可用 **e.preventDefault( )** 来阻止默认行为的发生  
-        比如: bootstrap 中,\<a href="#content1" data-toggle="tab">  
-        点 a 时，不但执行绑定的操作，还会附加修改地址栏中的 url(后加#content1 锚点地址)  
-        所以，**只要用 a 当做普通按钮用时，都要阻止默认行为。**
+     - **取消冒泡: e.stopPropagation()**  
+       什么是: 当前元素处理函数执行完，停止继续执行父元素上的处理函数。  
+       何时: 只要不希望触发父元素上的处理函数时，都要取消冒泡。
+     - **事件委托/事件代理:**  
+       优化:  
+       尽量减少事件监听的个数。  
+       为什么:  
+       浏览器触发事件，是采用遍历监听数组中每个监听对象来匹配并触发处理函数的。  
+       数组中监听对象多，遍历速度慢，数组中监听对象少，遍历快！  
+       何时:  
+       多个平级子元素，要绑定相同的事件处理函数时，只要在父元素绑定一次即可。  
+       如何:  
+       只要在父元素上统一绑定一次事件处理函数即可。  
+       点击子元素时，会自动冒泡到父元素上，执行提前委托好的处理函数。  
+       **坑 1: 如何获得最初触发事件的目标元素？**  
+        错误:使用 this  
+        因为事件绑在父元素上，执行时，也是冒泡到父元素才执行的。所以，**事件委托中的 this 一律指父元素。**  
+        正确:**e.target 记录了事件最初触发的目标元素,不随冒泡而改变**  
+        坑 2:**所有点击的元素都是想要的吗？不是!**  
+        **在正式执行逻辑前，都要先判断目标元素是否是想要的。**  
+        **哪些属性可作为区分的条件:(节点名，标签名) <span color=#ff0000>nodeName</span>, className,...**
+     - **阻止默认行为: 有些元素自带默认行为。**  
+       何时: 如果元素自带的默认行为不是我们想要的，就可用 **e.preventDefault( )** 来阻止默认行为的发生  
+       比如: bootstrap 中,\<a href="#content1" data-toggle="tab">  
+       点 a 时，不但执行绑定的操作，还会附加修改地址栏中的 url(后加#content1 锚点地址)  
+       所以，**只要用 a 当做普通按钮用时，都要阻止默认行为。**
 
-      - **鼠标坐标: 事件对象在事件发生时，就自动获得了鼠标在屏幕中的位置。**  
-        包括 3 组:
-        1. 相对于屏幕左上角: e.screenX &#160; e.screenY
-        2. 相对于浏览器文档显示区左上角: e.clientX &#160; e.clientY
-        3. 相对于当前元素左上角: e.offsetX &#160; e.offsetY
+     - **鼠标坐标: 事件对象在事件发生时，就自动获得了鼠标在屏幕中的位置。**  
+       包括 3 组:
+       1. 相对于屏幕左上角: e.screenX &#160; e.screenY
+       2. 相对于浏览器文档显示区左上角: e.clientX &#160; e.clientY
+       3. 相对于当前元素左上角: e.offsetX &#160; e.offsetY
 
 ---
 
@@ -563,7 +568,7 @@ HOW:2 种方式
 1. 在当前窗口打开新链接，可后退  
    html: \<a href="url" target="\_self">  
    js: window.open("url","\_self")
-2. 在当前窗口打开新链接，禁止后退(在一个窗口内，反复打开多个链接时才能实现)  
+2. **在当前窗口打开新链接，禁止后退**(在一个窗口内，反复打开多个链接时才能实现)  
    js: location.replace("新 url")  
    原理: 用新的 url 地址，替换 history 中旧的地址，保证 history 中只有一条 url，以此禁止后退
 3. 在新窗口打开新链接，可同时打开多个  
@@ -574,10 +579,11 @@ HOW:2 种方式
    js: window.open("url","自定义新窗口名")  
    原理: 其实，每个窗口在浏览器内存中都有一个唯一的名字，用来标识这个窗口。  
    浏览器规定，相同名称的窗口，只能打开一个。  
-   新打开的同名窗口会覆盖现有的重名窗口  
+   新打开的同名窗口会覆盖现有的重名窗口
+
    tips:  
    如果打开链接时，使用自定义窗口名，则反复点击链接，只能打开一个  
-   有两个预定义窗口名:  
+   **有两个预定义窗口名**:  
    \_self: 自动获取当前窗口自己的名字给新窗口  
    结果: 新窗口会覆盖当前窗口  
    \_blank: 空白，就是不指定新窗口名，浏览器会自动在底层分配，保证不重复。  
@@ -612,16 +618,78 @@ HOW:2 种方式
    相对路径: location.pathname  
    查询字符串: location.search  
    ?username=dingding&pwd=123456&favs=running  
-   锚点地址: location.hash #top
+   锚点地址: location.hash  
+   #top
 - 方法:
-  1. 在当前窗口打开新链接，可后退: location.href="新 url"
+  1. 在当前窗口打开新链接，可后退:  
+     location.href="新 url"
   2. 在当前窗口打开新链接，禁止后退:  
      location.replace("新 url")
-  3. 刷新: location.reload();
+  3. 刷新:  
+     location.reload();
 
 ### navigator
 
-> window.navigator 保存浏览器配置信息的对象
+> window.navigator 保存浏览器配置信息的对象  
+> userAgent:用户代理字符串，保存浏览器名称和版本号的字符串等同于 browser；
 
-**鄙视题:** 如何判断正在使用的浏览器的名称和版本号?  
-userAgent: 保存浏览器名称和版本号的字符串
+**鄙视题:** 如何判断正在使用的浏览器的名称和版本号?
+
+- ↓ IE8-IE10: MSIE/版本号
+- ↓ Firefox: Firefox/版本号
+- ↓ OPR: OPR/版本号 Chrome/版本号 Safari/版本号
+- ↓ Edge: Edge/版本号 Chrome/版本号 Safari/版本号
+- ↓ Chrome: Chrome/版本号 Safari/版本号
+- ↓ Safari: Safari/版本号
+
+```html
+<script>
+  var ua = navigator.userAgent;
+  var browser, version;
+  //猜ua中有没有IE
+  if (ua.indexOf("IE") != -1) {
+    browser = "IE";
+  }
+  //如果没有IE，却有Trident，说明一定是IE 11
+  else if (ua.indexOf("Trident") != -1) {
+    browser = "IE";
+    version = 11;
+  }
+  //再猜ua中有没有火狐
+  else if (ua.indexOf("Firefox") != -1) {
+    browser = "Firefox";
+  }
+  //再猜ua中有没有OPR
+  else if (ua.indexOf("OPR") != -1) {
+    browser = "OPR";
+  }
+  //再猜ua中有没有Edge
+  else if (ua.indexOf("Edge") != -1) {
+    browser = "Edge";
+  }
+  //再猜ua中有没有Chrome
+  else if (ua.indexOf("Chrome") != -1) {
+    browser = "Chrome";
+  }
+  //再猜ua中有没有Safari
+  else if (ua.indexOf("Safari") != -1) {
+    browser = "Safari";
+  }
+
+  if (version === undefined) {
+    //1. 先在ua中查找浏览器名称出现的位置
+    var i = ua.indexOf(browser);
+    //2. i+浏览器名称的长度+1
+    i += browser.length + 1;
+    //3. 截取ua中i位置开始的后三位字符，转为浮点数
+    version = parseFloat(ua.slice(i, i + 3));
+  }
+  document.write(`${navigator.userAgent}<hr>${browser}<hr>${version}`);
+  console.log(navigator.userAgent);
+  /*Mozilla/5.0 (Windows NT 10.0; WOW64)  
+    AppleWebKit/537.36 (KHTML, like Gecko)  
+    Chrome/75.0.3770.100 Safari/537.36*/
+  console.log(browser); //Chrome
+  console.log(version); //75
+</script>
+```
