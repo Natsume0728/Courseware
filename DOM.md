@@ -510,7 +510,8 @@ HOW:2 种方式
         正确:**e.target 记录了事件最初触发的目标元素,不随冒泡而改变**  
         坑 2:**所有点击的元素都是想要的吗？不是!**  
         **在正式执行逻辑前，都要先判断目标元素是否是想要的。**  
-        **哪些属性可作为区分的条件:(节点名，标签名) <span color=#ff0000>nodeName</span>, className,...**
+        **哪些属性可作为区分的条件:(节点名，标签名) nodeName, className,...**  
+        **nodeName 节点名 返回的节点名为全大写 如：BUTTON**  
      - **阻止默认行为: 有些元素自带默认行为。**  
        何时: 如果元素自带的默认行为不是我们想要的，就可用 **e.preventDefault( )** 来阻止默认行为的发生  
        比如: bootstrap 中,\<a href="#content1" data-toggle="tab">  

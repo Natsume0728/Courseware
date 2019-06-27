@@ -19,7 +19,7 @@ jQuery 是 **第三方** 开发的执行 DOM 操作的 **极简化** 的 **函�
 2. 兼容性: 凡是 jQuery 让用的，都没有兼容性问题:  
    比如: IE8 不支持 nth-child(i)  
    但是 jQuery 可随便使用 nth-child(i)  
-   因为 jQuery 内部其实调用的还是原生的 DOM 函数，且一旦发现不兼容，立刻用 js 程序模拟。
+   因为 jQuery 内部其实调用的还是原生的 DOM 函数，且一旦发现不兼容，立刻用 js 程序模拟。  
 
 何时使用 jQuery:  
 几乎所有大项目或框架的底层，都是用 jQuery 开发的。——仅适合于 PC 端项目
@@ -65,7 +65,7 @@ jQuery 是 **第三方** 开发的执行 DOM 操作的 **极简化** 的 **函�
    强调: jQuery 家的函数和对象，与 DOM 一定不能混用！
    决定用 jQuery，就要通篇都用 jQuery。
 
-jQuery 函数的三个小脾气:
+jQuery 函数的三个特点:
 
 1. 几乎所有的函数都自带遍历:  
    因为 jQuery 子对象其实是一个可保存多个 DOM 元素的 **类数组对象**。  
@@ -75,12 +75,12 @@ jQuery 函数的三个小脾气:
    调用时如果没给新值，就获取原值。  
    调用时如果给了新值，就变为修改值。  
     比如：  
-    $btn.html()  获取btn的内容  
-   $btn.html("xxx") 修改 btn 的内容
+    $btn.html() : 获取btn的内容  
+   $btn.html("xxx") : 修改 btn 的内容  
 3. 几乎每个函数都返回正在使用的 jQuery 对象，可继续使用。  
    强调: 因为\$是即创建新对象，又查找 DOM 树，所以，应该尽量少用！  
    解决: 链式操作！  
-   注意: 做事儿的步骤，上一步的返回值，刚好是下一步的主语.
+   注意: 做事儿的步骤，上一步的返回值，刚好是下一步的主语。  
 
 ## 查找元素
 
@@ -97,12 +97,21 @@ jQuery 只有两种查找:
 
 1. 基本过滤/位置过滤:  
    什么是:  
-   先将符合条件的元素，都取出来，放在一个集合中统一编号,且编号从 0 开始  
+   先将符合条件的元素，都取出来，放在一个集合中统一编号,且下标从 0 开始。  
    包括:  
-   :first &nbsp; :last &nbsp; :eq(i) &nbsp; :gt(i) &nbsp; :lt(i) &nbsp; :even &nbsp; :odd  
+:first  
+:last  
+:eq(i)  
+:gt(i)  
+:lt(i)  
+:even  
+:odd  
    vs 子元素过滤:  
-   按照元素在其父元素内的相对编号选取元素，下标从 1 开始  
-   :first-child :last-child :nth-child(i)
+   按照元素在其父元素内的相对编号选取元素，下标从 1 开始。  
+   :first-child  
+   :last-child  
+   :nth-child(i)  
+   :nth-child(2n)  
 2. 内容过滤:
    1. 用元素内容中的文本作为筛选条件  
       :contains(文本)
@@ -125,7 +134,7 @@ jQuery 只有两种查找:
    :enabled 选择启用的元素  
    :disabled 选择被禁用的元素  
    :checked 选择被选中的 checkbox 或 radio 元素  
-   :selected 选择 select 中被选中的 option
+   :selected 选择 select 中被选中的 option  
 
 ### 按节点间关系查找
 
