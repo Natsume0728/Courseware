@@ -1,5 +1,14 @@
 # ES5
 
+<!-- TOC depthFrom:2 orderedList:false -->
+
+- [严格模式](#严格模式)
+- [保护对象](#保护对象)
+- [call-apply-bind](#call-apply-bind)
+- [数组API](#数组api)
+
+<!-- /TOC -->
+
 >ECMAScript: javascript语言的国际标准  
 仅定义了js语言的基本语法  
 没有定义如何操作网页内容  
