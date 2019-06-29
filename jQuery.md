@@ -816,9 +816,3 @@ http://tedu.cn/index.html--------> http://tedu.cn/index/login
 2. 公司: JSONP —— 同时修改客户端和服务端程序才能可支持。
 
 前后端分离: 见视频。
-
-<!-- [视频](./accordion.wmv) -->
-<video src="accordion.wmv" controls="controls" autoplay></video>
-<video id="video" controls="" preload="none" poster="http://img.blog.fandong.me/2017-08-26-Markdown-Advance-Video.jpg">
-      <source id="mp4" src="http://img.blog.fandong.me/2017-08-26-Markdown-Advance-Video.mp4" type="video/mp4">
-      </video>
