@@ -1,12 +1,24 @@
 # ES6
 
+<!-- TOC depthFrom:2 orderedList:false -->
+
+- [模板字符串](#模板字符串)
 - [let](#let)
+- [箭头函数](#箭头函数)
+- [for-of](#for-of)
+- [参数增强](#参数增强)
+- [解构](#解构)
+- [class](#class)
+- [Promise](#promise)
+
+<!-- /TOC -->
+<!-- - [let](#let)
 - [箭头函数](#箭头函数)
 - [for of](#for-of)
 - [参数增强](#参数增强)
 - [解构](#解构)
 - [class 面向对象](#class)
-- [promise](#promise)
+- [promise](#promise) -->
 
 ## 模板字符串
 

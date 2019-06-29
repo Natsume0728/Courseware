@@ -1,6 +1,31 @@
 # DOM &nbsp; HTML DOM 常用对象 &nbsp; BOM
 
+<!-- TOC depthFrom:2 orderedList:false -->
+
 - [DOM](#dom)
+    - [查找元素](#查找元素)
+    - [修改](#修改)
+    - [添加和删除](#添加和删除)
+- [HTML DOM 常用对象](#html-dom-常用对象)
+    - [Image 对象](#image-对象)
+    - [Select 对象](#select-对象)
+    - [Option 对象](#option-对象)
+    - [Table 对象](#table-对象)
+    - [Form 对象](#form-对象)
+- [事件](#事件)
+    - [绑定事件处理函数](#绑定事件处理函数)
+    - [事件模型](#事件模型)
+    - [事件对象](#事件对象)
+- [BOM](#bom)
+    - [window](#window)
+    - [打开窗口](#打开窗口)
+    - [history](#history)
+    - [location](#location)
+    - [navigator](#navigator)
+
+<!-- /TOC -->
+
+<!-- - [DOM](#dom)
   - [查找元素](#查找元素)
   - [修改](#修改)
   - [添加/删除](#添加和删除)
@@ -19,7 +44,7 @@
   - [打开窗口](#打开窗口)
   - [window.history](#history)
   - [window.location](#location)
-  - [window.navigator](#navigator)
+  - [window.navigator](#navigator) -->
 
 ## DOM
 
