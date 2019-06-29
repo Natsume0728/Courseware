@@ -1,27 +1,6 @@
 # jQuery
 
-<!-- TOC depthFrom:2 orderedList:false -->
-
-- [什么是 jQuery](#什么是-jquery)
-- [如何使用 jQuery](#如何使用-jquery)
-- [查找元素](#查找元素)
-    - [按选择器查找](#按选择器查找)
-    - [按节点间关系查找](#按节点间关系查找)
-- [1. 修改: 同 DOM](#1-修改-同-dom)
-    - [内容](#内容)
-    - [属性](#属性)
-    - [样式](#样式)
-- [添加/删除/替换/克隆](#添加删除替换克隆)
-    - [添加: 2 步](#添加-2-步)
-- [事件绑定](#事件绑定)
-- [动画:](#动画)
-- [类数组对象操作:](#类数组对象操作)
-- [添加自定义函数:](#添加自定义函数)
-- [\*\*\*封装自定义插件](#\\\封装自定义插件)
-- [ajax](#ajax)
-- [**\***跨域:](#\跨域)
-
-<!-- /TOC -->
+<!-- TOC depthFrom:2 orderedList:false -->autoauto- [什么是 jQuery](#什么是-jquery)auto- [如何使用 jQuery](#如何使用-jquery)auto- [查找元素](#查找元素)auto    - [按选择器查找](#按选择器查找)auto    - [按节点间关系查找](#按节点间关系查找)auto- [1. 修改: 同 DOM](#1-修改-同-dom)auto    - [内容](#内容)auto    - [属性](#属性)auto    - [样式](#样式)auto- [添加/删除/替换/克隆](#添加删除替换克隆)auto    - [添加元素: 2 步](#添加元素-2-步)auto    - [替换元素](#替换元素)auto    - [删除元素](#删除元素)auto    - [克隆元素](#克隆元素)auto- [事件绑定](#事件绑定)auto    - [DOM中](#dom中)auto    - [jQuery中](#jquery中)auto    - [事件委托/事件代理](#事件委托事件代理)auto    - [页面加载后，自动执行](#页面加载后自动执行)auto    - [鼠标事件](#鼠标事件)auto- [动画](#动画)auto    - [排队和并发](#排队和并发)auto    - [停止动画: .stop( )](#停止动画-stop-)auto- [类数组对象操作](#类数组对象操作)auto- [添加自定义函数](#添加自定义函数)auto- [封装自定义插件\*\*\*\*\*\*\*\*\*](#封装自定义插件\\\\\\\\\)auto- [ajax](#ajax)auto- [**\***跨域](#\跨域)autoauto<!-- /TOC -->
 
 ## 什么是 jQuery
 
@@ -592,13 +571,13 @@ $txt.on("input",function(){
 - change 选中项改变 常用于select元素
 - blur 失去焦点
 - focus 获得焦点
-- keydown 键盘按下未抬起 
+- keydown 键盘按下未抬起
 - keyup 键盘按键按下后抬起
 - mousedown 鼠标按键按下
 - mouseenter  鼠标进入元素 代替 DOM中 mouseover
 - mouseleave  鼠标移出元素 代替 DOM 中mouseout
 - mousemove  鼠标移动事件
-- mouseout  DOM中的鼠标移出事件 
+- mouseout  DOM中的鼠标移出事件
 - mouseover  DOM中的鼠标移入事件
 - mouseup   鼠标按键抬起
 - scroll  滚动条发生滚动时触发
@@ -716,55 +695,74 @@ F12->network->刷新页面
 何时: jQuery 提供的函数不够用时
 如何: 其实就是在 jQuery 的原型对象中添加一个新函数。所有 jQuery 类型的子对象都可共用！
 
+## 封装自定义插件\*\*\*\*\*\*\*\*\*
 
-## \*\*\*封装自定义插件
+>组件/插件: 拥有独立的 HTML，css，js 和数据的可重用的页面区域  
+为什么: 重用!  
+何时: 如果页面中一个功能区域可能被反复使用，都要将其封装为一个插件。  
+如何: 1.jQuery 官方插件； 2.封装自定义插件  
 
-1. 封装自定义插件:
-   组件/插件: 拥有独立的 HTML，css，js 和数据的可重用的页面区域
-   为什么: 重用!
-   何时: 如果页面中一个功能区域可能被反复使用，都要将其封装为一个插件。
-   如何: 2 种情况: 1. jQuery 官方插件: jQueryUI
-   官网下载: jquery-ui.css
+- jQuery 官方插件: jQueryUI
+
+   官网下载:  
+   jquery-ui.css
    images/
    jquery-ui.js
-   在页面中引入:
+
+01. 在页面中引入：
+
+```js
    <link rel="stylesheet" href="css/jquery-ui.css"
    <!--先引入jquery，再引入jquery-ui-->
    <script src="js/jquery-1.11.3.js"
    <script src="js/jquery-ui.js"
    <script>自定义代码</script>
-   html 中:
-   按照插件的要求，定义 HTML 内容结构
-   不需要加任何 class
-   js: 查找插件的 HTML 父元素，对父元素调用一次插件函数即可自动添加样式和行为。
-   \$("my-accordion").accordion();
-   原理:
-   侵入性: 插件函数根据自己的需要，自动为元素添加 class 和行为
-   好处: 简单
-   不好: 不可维护 2. 封装自定义插件:
-   前提: 已经用 html，css 和 js 实现了插件的样式和功能。
-   如何: 1. 将插件相关的 css，剪切到一个独立的 css 文件中保存。
-   强调: 如何避免插件/组件间 class 冲突:
-   一个组件内的选择器，都要以插件的父元素的 class 作为查找的开头/起点。 2. 定义独立的 js 文件：
-   在 jquery 的原型对象中添加插件函数 1. 添加样式：侵入: 悄悄自动添加 2. 添加行为：
-   使用自定义插件: 同 jQueryUI 的用法。
+```
+
+02. html 中:
+   按照插件的要求，定义 HTML 内容结构  
+   不需要加任何 class  
+<br>
+03. js 中:  
+   查找插件的 HTML 父元素，对父元素调用一次插件函数即可自动添加样式和行为。  
+   \$("my-accordion").accordion();  
+    - 原理:  
+    侵入性: 插件函数根据自己的需要，自动为元素添加 class 和行为  
+    好处: 简单  
+    不好: 不可维护  
+
+- **封装自定义插件:**
+
+   前提: 已经用 html，css 和 js 实现了插件的样式和功能。  
+   如何:  
+   1. 将插件相关的 css，剪切到一个独立的 css 文件中保存。  
+   强调: **如何避免插件/组件间 class 冲突**:  
+   一个组件内的选择器，都要以插件的父元素的 class 作为查找的开头/起点。  
+   2. 定义独立的 js 文件：  
+   在 jquery 的原型对象中添加插件函数  
+      1. 添加样式：侵入: 悄悄自动添加  
+      2. 添加行为：  
+   使用自定义插件: 同 jQueryUI 的用法。  
 
 ---
 
 ## ajax
 
-jQuery 中已经封装好了现成的 ajax 函数，我们可直接调用
+jQuery 中已经封装好了现成的 ajax 函数，可直接调用
+
+```js
 \$.ajax({
 url:"url 路径",
 type: "get/post",
 data:"uname=dingding&upwd=123456",
 //如果本次请求没有参数，可省略 data
 dataType: "json",
-//按照国际标准所有服务端接口，都应该返回 json 格式的字符串。
-//但是也不排除例外
-//如果返回的不是 json，就不要写 dataType:"json"，会出错。
-//因为 dataType:"json"是自动执行 JSON.parse()的意思。如果服务端返回的字符串不是 json 格式，则 JSON.parse()会报错！
-//success 函数是一个回调函数，会在请求成功结束后，自动调用。参数 result，会自动获得服务端返回的值。而且已经被 JSON.parse()，范围为 js 对象了。
+//按照国际标准所有服务端接口，都应该返回 json 格式的字符串。  
+//例外：如果返回的不是 json，就不要写 dataType:"json"，会出错。  
+//因为 dataType:"json" 是自动执行 JSON.parse()的意思。  
+//如果服务端返回的字符串不是 json 格式，则 JSON.parse()会报错！  
+//success 函数是一个回调函数，会在请求成功结束后，自动调用。  
+//参数 result，会自动获得服务端返回的值,而且已经被 JSON.parse()，转为 js 对象了。
 success:function(result){
 ... ...
 }
@@ -773,11 +771,13 @@ success:function(result){
 .then(function(result){
 //result 获得的就是服务端返回的数据
 })
-强调: success: 和 .then() 二选一即可！
+```
+
+强调: **success: 和 .then( ) 二选一即可！**
 
 ---
 
-## **\***跨域
+## 跨域***\***
 
 什么是: 一个域名下的网站，向另一个域名下的服务端发送请求。
 比如:
@@ -816,3 +816,9 @@ http://tedu.cn/index.html--------> http://tedu.cn/index/login
 2. 公司: JSONP —— 同时修改客户端和服务端程序才能可支持。
 
 前后端分离: 见视频。
+
+<!-- [视频](./accordion.wmv) -->
+<video src="accordion.wmv" controls="controls" autoplay></video>
+<video id="video" controls="" preload="none" poster="http://img.blog.fandong.me/2017-08-26-Markdown-Advance-Video.jpg">
+      <source id="mp4" src="http://img.blog.fandong.me/2017-08-26-Markdown-Advance-Video.mp4" type="video/mp4">
+      </video>
