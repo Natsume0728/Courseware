@@ -29,6 +29,10 @@
     - [不规则的表格](#不规则的表格)
     - [表格的复杂应用](#表格的复杂应用)
 - [列表（重点*******）](#列表重点)
+- [结构标签](#结构标签)
+- [表单\*\*\*\*重点\*\*\*\*\*](#表单\\\\重点\\\\\)
+    - [form表单详解](#form表单详解)
+- [浮动框架](#浮动框架)
 
 <!-- /TOC -->
 
@@ -407,8 +411,8 @@ src="../08.png"
 
 - tr的属性
   - bgcolor="yellow"  背景颜色
-  - align="right"  表格这一行的内容水平对齐方式
-  - valign表格这一行的内容垂直对齐方式  
+  - align="right"  **表格这一行的内容水平对齐方式**
+  - valign  **表格这一行的内容垂直对齐方式**  
       取值  top/middle/bottom
 - td的属性
   - width="200px"  
@@ -462,7 +466,7 @@ src="../08.png"
   2. 列表项  
   \<li>\</li>   list item  
 
-- 有序列表  
+1. 有序列表  
 \<ol>  
  &nbsp; &nbsp; \<li>\</li>  
  &nbsp; &nbsp; \<li>\</li>  
@@ -474,7 +478,7 @@ src="../08.png"
   - a/A 字母
   - i/I 罗马数字
 
-- 无序列表---经常用于页面布局  
+1. 无序列表---经常用于页面布局  
 多个li的样式大体一致的时候，使用ul>li布局  
 \<ul>  
  &nbsp; &nbsp; \<li>\</li>  
@@ -487,3 +491,216 @@ src="../08.png"
   - .circle 空心圆
   - .square 实心方块
   - .none  不显示
+
+1. 列表的嵌套
+原则，嵌套只能写在li中。不管是ol还是ul，直接子元素只能是li
+
+1. 定义列表
+h5新出的，一个名词，以及对这个名词的解释和定义  
+
+```html
+<dl>  定义列表
+  <dt> </dt>  要解释说明的名词
+  <dd> </dd>  对名词解释的内容
+</dl>
+```
+
+## 结构标签
+
+h5新出的标签，专门用于网页布局  
+为了让代码有可读性，h5推出一堆与div功能一模一样的标签，专门用作网页布局  
+
+- \<header>\</header>
+定义网页的头部，或者某个区域的顶部
+- \<footer>\</footer>
+定义网页的脚部，或者某个区域的底部
+- \<nav>\</nav>
+定义网页的导航栏
+- \<section>\</section>
+定义网页的主体内容
+- \<aside>\</aside>
+定义网页的侧边栏
+- \<article>\</article>
+定义与文字相关的内容
+比如，论坛，回帖，用户评论....
+
+## 表单\*\*\*\*重点\*\*\*\*\*  
+
+- 作用  
+提供可视化的输入控件  
+收集用户输入的信息，并提交请求给服务器  
+总结：form自带提交请求的功能  
+      ajax提交不需要form的支持  
+      在同一个功能中，使用form就不用ajax,使用ajax就不用form  
+- form的组成  
+前端部分:提供表单控件，与用户交互的可视化控件  
+后端部分:后台接口对提交的数据进行处理 nodejs+mysql  
+
+### form表单详解
+
+\<form>\</form>  
+属性：  
+
+- action="" 定义表单提交时，发送请求的动作(url)  
+**如果不写值，默认提交给本页**  
+- method="" 定义表单的提交方法  
+取值  
+  - get(默认值)  
+特点：明文提交(参数在地址栏中显示)，不安全  
+      提交的数据有大小限制，最大为2kb  
+使用场合：向服务器要数据的时候，使用get  
+  - post  
+特点：隐式提交，参数不在地址栏中显示  
+      提交数据没有大小限制  
+使用场合：要传递数据给服务器的时候，使用post  
+  - 其它的提交方法  
+delete put option.......  
+
+- enctype="" 指定表单数据的编码方式  
+设置允许将什么类型的属性传递给服务器  
+取值：  
+  - application/x-www-form-urlencoded
+默认值，允许将任意的字符提交给服务器
+(不能提交文件)
+  - text/plain 允许提交普通字符给服务器，不能包含特殊符号
+  - multipart/form-data 允许提交文件给服务器  
+
+\<form action="url" method="get"enctype="applicationx-www-form-urlencoded">\</form>:
+收集的数据，发送给url这个接口，使用get提交  
+要求提交的数据是任意字符，不是文件  
+
+**表单控件**  
+在form标签中，能够与用户交互的可视化控件  
+
+**表单控件的分类:**  
+input元素  基础9种  
+textarea 多行文本域  
+select+option下拉选择器  
+其它元素  
+h5新出的input元素 10种  
+
+- input元素  
+\<input type="">  
+在页面中，input提供了各式各样的输入控件  
+文本框，密码框，单选框，多选等....  
+共同的属性  
+  - type="" 指定input元素的类型
+  - name="" **为控件定义名称，此名称是给服务器用的，如果想往服务器传递参数，此名称必须写**
+  - value 是控件的值，真正传给服务器的值  
+例外,**在按钮控件中,value是设置按钮上显示的文字**  
+  - disabled 禁用，**不能修改值，也不能提交**  
+      取值：  
+    - disabled="disabled"  
+    - disabled="true"  --js使用  
+    - disabled  
+            这种属性，称之为无值属性  
+
+- **input详解9种**  
+
+  - (2) 文本框和密码框  
+文本框 type="text"  input默认是text  
+密码框 type="password"  
+属性：  
+maxlength 设置输入的最大值  
+readonly 无值属性，**不能修改，允许提交**  
+placeholder 占位提示符  
+  - (3)按钮  
+提交按钮 type="submit"  
+    将表单中的数据收集整理，发送给服务器  
+普通按钮 type="button"  
+    没有功能，配合事件，调用js代码  
+重置按钮 type="reset"  
+    将当前表单内容恢复到初始化状态  
+按钮中value，设置按钮上的文本，此value不提交  
+关于按钮的题外话  
+h5给我们推出了新的按钮标签:  
+**\<button>\</button> 自带submit功能**  
+  - (2)单选和复选按钮  
+单选按钮 type="radio"  
+多选按钮 type="checkbox"  
+属性name，除了定义控件名称之外，还起到分组的作用，分了组才会有单选效果  
+**必须有value属性，不然传递的参数永远是on**  
+checked 无值属性 设置默认被选中的项  
+  - (1)隐藏域  
+type="hidden"  
+想把数据提交给服务器，但是又不想用户看到  
+这种数据放到隐藏域中  
+用户看不见，但是可以提交  
+  - (1)文件选择框，上传文件  
+type="file"  
+前提：提交方法，使用post  
+      enctype属性，设置为multipart/form-data  
+**属性multiple，可以选择多个文件上传**  
+- **h5新表单元素**
+  - 邮箱，提交的时候，验证@以及@前后至少有一个字符  
+\<input type="email">  
+  - 搜索类型，自带快速清除功能  
+\<input type="search">  
+  - url类型，提交时，验证以http://开头  
+\<input type="url">
+  - 电话号码，移动端使用时，会弹出虚拟键盘  
+\<input type="tel">  
+  - 数字类型  
+\<input type="number" max="10" min="2" step="3">  
+max：能接收的最大值  
+min：能接收的最小值  
+step：步长，按一次按钮，变化几个数字  
+  - 范围类型  
+\<input type="range" max="22" min="10" step="4">  
+max：能接收的最大值  
+min：能接收的最小值  
+step：步长，按一次按钮，变化几个数字  
+  - 颜色类型  
+\<input type="color">  
+  - 日期类型，提供了一个日期选择的控件  
+\<input type="date">  
+  - 月份类型  
+\<input type="month">  
+  - 周类型  
+\<input type="week">  
+  - \<button>\</button>  
+替代\<input type="submit"> 有提交功能 增加可读性  
+- textarea多行文本域  
+\<textarea>\</textarea>  
+允许录入多行文字  
+cols 设置输入的列数  
+rows 设置输入的行数  
+根据计算硬件不同，不准确  
+- 下拉选  
+\<select>  
+  \<option>\</option>  
+  \<option>\</option>  
+  ....  
+\</select>  
+注意：  
+1.**如果option没有value，那么select的value是option的内容**  
+2.**如果option有value,那么select的value是选中option的value值**  
+属性 name  value  
+selected  默认选中  
+size 默认值为1，  
+     值为1的时候，为下拉选择框  
+     值>1的时候，为滚动选择框  
+multiple 无值属性，多选  
+- 其它元素  
+label 关联文本与表单的控件  
+\<label for="">\</label>
+属性for绑定要关联的表单控件的ID
+- 为控件分组  
+
+```html
+<fieldset> 分组  
+  <legend>标题</legend>  
+  form表单控件...  
+</fieldset>  
+```
+
+## 浮动框架
+
+\<iframe style="width:100%" src="01_ex.html"
+frameborder="0" scrolling="no">\</iframe>  
+语法: \<iframe>\</iframe>  
+属性:  
+    src 引用的资源路径  
+    frameborder="0" 清除边框  
+    scrolling="no" 清除滚动条  
+    width/height  
