@@ -149,18 +149,18 @@ Component = Template + Style + Script
 - 选择绑定指令： [ngSwitch]   *ngSwitchCase  *ngSwitchDefault  
 
 ```html
-	<any  [ngSwitch]="变量名">
-		<any  *ngSwitchCase="值">....</any>
-		<any  *ngSwitchCase="值">....</any>
-		...
-		<any  *ngSwitchDefault>....</any>
- 	</any>
+  <any  [ngSwitch]="变量名">
+    <any  *ngSwitchCase="值">....</any>
+    <any  *ngSwitchCase="值">....</any>
+    ...
+    <any  *ngSwitchDefault>....</any>
+  </any>
 ```
 
 - 样式绑定指令：[ngStyle]  
    `<any [ngStyle]="obj">`  
 - 样式绑定指令：[ngClass]  
-`<any [ngClass]="obj">`   
+`<any [ngClass]="obj">`  
 
 ### (了解)如何自定义指令
 
@@ -171,9 +171,9 @@ Component = Template + Style + Script
 
   @Directive({ selector: 'appNeedStrong' })
   export class MyDirective {
-	contructor( el: ElementRef){
-		el.nativeElement.xxx....
-	}
+  contructor( el: ElementRef){
+    el.nativeElement.xxx....
+  }
   }
 ```
 
@@ -183,14 +183,14 @@ Component = Template + Style + Script
 - 方向2：View  =>  Model
 
 Angular中实现双向数据绑定的方法：  
-`<input  [(ngModel)]="userName">`
+`<input  [(ngModel)] = "userName">`
 
   提示：**ngModel指令处于FormsModule，必须在当前模块中声明导入才能使用**：
 
 ```ts
   import { FormsModule } from '@angular/forms';
   @NgModule({
-		imports: [ FormsModule ]
+    imports: [ FormsModule ]
   })
 ```
 
@@ -212,46 +212,129 @@ Vue.js没有内置任何过滤器；但Angular内置了很多好用的管道：
 - number：数字格式化(每三位加逗号，并指定小数位数)
 - currency：把数字以货币形式显示
 
-### 自定义管道：
+### 自定义管道
 
   工具命令：  `ng   g   pipe  管道名`
 
 ```ts
   @Pipe({
-	name: 'sex'
+  name: 'sex'
   })
   class SexPipe {
-	transform(val, args){
-		return ...;
-	}
+  transform(val, args){
+    return ...;
+  }
   }
 ```
 
 ## (重点/难点)父子组件间的数据传递
 
 `ng  g   component   parent`  
-`ng  g   component   child`
-  parent.component.html:
-	<app-child></app-child>
---------------------------------------------------
-   
+`ng  g   component   child`  
+  parent.component.html:  
+  \<app-child>\</app-child>  
 
-- 父组件给子组件传递数据： 父=>子 —— Props Down  
-	- 子组件声明自己专有的属性  
-		`@Input()     //Input装饰器把下面的属性变为“输入型属性”`  
-		`userName: string;`
-	- 父组件使用子组件的专有属性赋值——值为父组件的模型数据  
-		`<app-child  [userName]="myName">`  
-- 子组件给父组件传递数据： 子=>父 —— Events Up  
-	- 子组件声明并触发事件，触发时携带自己的数据  
-		`@Output()    //声明输出型属性`  
-		`unameEvent = new EventEmitter();`  
-		`.....`  
-		`this.unameEvent.emit( 123 );`  
-	- 父组件监听子组件的事件，并提供处理函数接收事件数据  
-		`<app-child  (unameEvent)="doEvent($event)" >`  
-		`...`  
-		`doEvent( data ){  ....  }`
+### 父组件给子组件传递数据： 父=>子 —— Props Down  
+
+- 子组件声明自己专有的属性  
+    `@Input()     //Input装饰器把下面的属性变为“输入型属性”`  
+    `userName: string;`
+
+```ts
+// in 子组件 ts 文件
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child-blog',
+  templateUrl: './child-blog.component.html',
+  styleUrls: ['./child-blog.component.css']
+})
+export class ChildBlogComponent {
+  //声明子组件的专有属性：userName
+  @Input()   //输入型属性，可以被父组件输入值
+  userName:string   //子组件属性的值来自于父组件
+}
+```
+
+- 父组件使用子组件的专有属性赋值——值为父组件的模型数据  
+    `<app-child  [userName]="myName">`  
+
+### 子组件给父组件传递数据： 子=>父 —— Events Up  
+
+- 子组件声明并触发事件，触发时携带自己的数据  
+  `@Output()    //声明输出型属性`  
+  `unameEvent = new EventEmitter();`  
+
+```ts
+//in 子组件 ts 文件
+
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child-update',
+  templateUrl: './child-update.component.html',
+  styleUrls: ['./child-update.component.css']
+})
+export class ChildUpdateComponent {
+  userInput:string = ''
+  //事件发射器属性：可用于对外界发射事件对象
+  @Output()   //输出型属性，必须是“事件发射器”
+  unameEvent = new EventEmitter(); 
+
+  doClick(){
+    console.log('用户输入了：', this.userInput)
+    //向外界发射事件，并携带数据
+    this.unameEvent.emit( this.userInput );
+  }
+}
+```
+
+`this.unameEvent.emit( 123 );`  
+
+```html
+<!-- in 子组件 html-->
+
+CHILD-UPDATE:
+<input [(ngModel)]="userInput">
+<button (click)="doClick()">  修改签名  </button>
+```
+
+- 父组件监听子组件的事件，并提供处理函数接收事件数据  
+  `<app-child  (unameEvent)="doEvent($event)" >`  
+
+```ts
+//in 父组件 ts 文件
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  templateUrl: './parent.component.html',
+  styleUrls: ['./parent.component.css']
+})
+export class ParentComponent {
+  //父组件中的模型数据
+  myName:string = '苍茫大地'
+
+  //处理子组件事件的方法
+  doUnameEvent( data ){
+    console.log('父组件正在处理子组件事件：', data)
+    //把子组件传递给父组件的数据加以利用
+    this.myName = data;
+  }
+}
+```
+
+  `doEvent( data ){  ....  }`
+
+```html
+<!-- in 父组件 html-->
+<h1>PARENT: {{myName}}的个人网站</h1>
+<hr>
+
+<app-child-update (unameEvent)="doUnameEvent($event)"></app-child-update>
+```
 
 ## 服务和依赖注入
 
@@ -263,7 +346,8 @@ Vue.js没有内置任何过滤器；但Angular内置了很多好用的管道：
 
 inject：打针，注入  
 injectable：能被注入给别人的  
-Angular创建对象的两种方式：  
+
+### Angular创建对象的两种方式
 
 - 手工创建  
     `var logger = new LoggerService();`  
@@ -272,7 +356,8 @@ Angular创建对象的两种方式：
     `constructor(logger:LoggerService){`  
         `logger.log('用户增加了一个商品')`  
     `}`  
-在构造方法中声明需要依赖某个对象，且该对象是“可以被注入的(@Injectable)”,那么Angular就会自动创建依赖的对象，并注入给当前构造方法
+在构造方法中声明需要依赖某个对象，且该对象是“可以被注入的(@Injectable)”,  
+那么Angular就会自动创建依赖的对象，并注入给当前构造方法
 
 ## Angular核心概念之六 —— 服务和DI
 
@@ -283,9 +368,10 @@ Angular创建对象的两种方式：
   创建服务：  
 
 ```ts
-  @Injectable( {			
-	//可以被注入给某个组件
-	//Injector/Provider：注入器/服务提供者，负责创建服务对象并注入给组件，Angular会自动为每个服务创建必需的注入器
+  @Injectable( {
+  //可以被注入给某个组件
+  //Injector/Provider：注入器/服务提供者，负责创建服务对象并注入给组件，
+  //Angular会自动为每个服务创建必需的注入器
   } )
   export class LoggerService{
   }
@@ -298,7 +384,7 @@ Angular中的Service可以在哪里被提供/Service的提供者/注入器有哪
 - 方式1：声明服务时提供——根模块中提供的服务对象是整个应用中“单例的”
 
 ```ts
-   @Injectable({             
+   @Injectable({
         providedIn: 'root'
    })
    export  class  LoggerService{  }
@@ -338,13 +424,15 @@ Angular中的Service可以在哪里被提供/Service的提供者/注入器有哪
 ### 使用步骤
 
 1. 在主模块中引入HttpClientModule——会提供HttpClient服务的注入器  
+
 ```ts
 	@NgModule({
 		imports: [ HttpClientModule ]
 	})
 ```
+
 2. 在需要使用异步请求模块中声明依赖HttpClient服务  
-	`constructor(private http: HttpClient){}`
+  `constructor(private http: HttpClient){}`
 3. 调用HttpClient提供的异步数据请求服务  
   - this.http.get( )
   - this.http.post( )
@@ -366,25 +454,24 @@ JS语言基础语法	=>		JS设计模式(23+1)
   在未来的某个不确定时间，甲方“发布(publish)”新消息，乙方会立即接到通知。  
 
   HttpClient服务采用了“观察者/订阅-发布模式”，其最核心对象为：  
-	`let  obj  =  new  Observable( );  //可被观察的对象`  
-	`//可以关注/订阅“可被观察的”对象`  
-	`obj.subscribe(  ( )=>{ //收到订阅消息时的回调函数 }   )`
+  `let  obj  =  new  Observable( );  //可被观察的对象`  
+  `//可以关注/订阅“可被观察的”对象`  
+  `obj.subscribe(  ( )=>{ //收到订阅消息时的回调函数 }   )`
 
 ## Angular中组件的声明周期钩子函数
 
-- Hooks Function：声明好的特定的函数，到了指定的时间点，就会被自动执行
-- LifeCycle Hooks Function：在组件的不同生命阶段会自动执行的函数
+>Hooks Function：声明好的特定的函数，到了指定的时间点，就会被自动执行
+>>LifeCycle Hooks Function：在组件的不同生命阶段会自动执行的函数
 
-面试题：**Angular中组件的生命周期钩子函数按顺序有**：
-  (0)constructor( )：构造方法，执行且仅执行一次  
-  (1)ngOnChanges( )：组件的输入属性值发生赋值或改变  
-  (2)ngOnInit( )：组件正在初始化，一般用于组件刚加载完成时执行的业务操作，如获取页面数据；执行且仅执行一次  
-  (3)ngDoCheck( )：组件正在执行变化检查  
-  (4)ngAfterContentInit( )：组件内容初始化之后  
-  (5)ngAfterContentChecked()：组件内容被重新检查后  
-  (6)ngAfterViewInit( )：组件视图初始化之后  
-  (7)ngAfterViewChecked()：组件视图被重新检查后  
-  (8)ngOnDestroy( )：组件即将从DOM树上销毁，用于释放定时器、取消订阅...执行且仅执行一次  
+1. constructor( )：构造方法，执行且仅执行一次  
+2. ngOnChanges( )：组件的输入属性值发生赋值或改变  
+3. **ngOnInit( )**：组件正在初始化，一般用于组件刚加载完成时执行的业务操作，如获取页面数据；执行且仅执行一次  
+4. ngDoCheck( )：组件正在执行变化检查  
+5. ngAfterContentInit( )：组件内容初始化之后  
+6. ngAfterContentChecked()：组件内容被重新检查后  
+7. ngAfterViewInit( )：组件视图初始化之后  
+8. ngAfterViewChecked()：组件视图被重新检查后  
+9. ngOnDestroy( )：组件即将从DOM树上销毁，用于释放定时器、取消订阅...执行且仅执行一次  
 
 ## Angular核心概念之七 —— 路由和SPA应用
 
@@ -395,40 +482,46 @@ JS语言基础语法	=>		JS设计模式(23+1)
   (2)便于实现“过场动画”——多页应用不可能做到
 - SPA应用的不足：  
   (1)不便于实现SEO优化  
-SPA应用的核心——路由词典(把一个地址和一个组件对应起来)：  
+
+### SPA应用的核心——路由词典(把一个地址和一个组件对应起来)
+
 ```ts
-	[
-  		{ path: 'index',  component: ...}
-  		{ path: 'product/list',  component: ...}
-  		{ path: 'user/login',  component: ...}
-  		.....
-	]
+  [
+      { path: 'index',  component: ...}
+      { path: 'product/list',  component: ...}
+      { path: 'user/login',  component: ...}
+      .....
+  ]
 ```
 
 ### SPA应用的原理
 
 >框架根据客户端请求的路由地址，异步加载对应的组件内容，替换之前的组件内容。
 
-### 使用Angular中的路由步骤：
+### 使用Angular中的路由步骤
 
-(0)提前准备好路由组件  
-	`ng  g  component  index`  
-	`ng  g  component  productList`  
-	`ng  g  component  productDetail`  
-(1)在根模块中创建路由词典  
-	`var  routes = [ {path:'product/list', component: ...} ]`  
-(2)在根模块引入路由模块，注册路由词典  
+1. 提前准备好路由组件  
+  `ng  g  component  index`  
+  `ng  g  component  productList`  
+  `ng  g  component  productDetail`  
+2. 在根模块中创建路由词典  
+  `var  routes = [ {path:'product/list', component: ...} ]`  
+3. 在根模块引入路由模块，注册路由词典
+
 ```ts
-	@NgModule({
-		imports: [ RouterModule.forRoot(routes) ]
-	})  
+  @NgModule({
+    imports: [ RouterModule.forRoot(routes) ]
+  })  
 ```
-(3)在根组件的模板中声明路由组件的占位符  
-	`<router-outlet></router-outlet>`  
-(4)让客户端请求路由地址  
-	`http://127.0.0.1:4200/product/list`
 
-1.路由词典配置
+4. 在根组件的模板中声明路由组件的占位符  
+  `<router-outlet></router-outlet>`  
+5. 让客户端请求路由地址  
+  `http://127.0.0.1:4200/product/list`
+
+### 路由词典配置
+
+```ts
 let routes = [
   {path:'', component:IndexComponent},
   {path:'index', component:IndexComponent},
@@ -437,134 +530,202 @@ let routes = [
   {path:'user/center', component:UserCenterComponent},
   {path:'**', component:NotFoundComponent},
 ]
+```
+
 注意：路由词典中的路由path不能以 '/' 开头！但是，路由跳转时指定的路径最好都以 '/' 开头！
 
-2.路由跳转
+### 路由跳转
+
   从一个路由地址跳转到另一个有两种方法：
-  方式1：编程方式
-	contructor( private router: Router ){ }
-	...
-	this.router.navigateByUrl( '...' )
-  方式2：模板方式
-	<any  routerLink="...">
-	注意：routerLink指令可以用在任何元素上，如DIV、A、BUTTON
 
-3.路由参数
-  在路由的path属性中，有些部分固定不变，有些部分需要动态变化：
-	{  path:  'product/detail/20',  component: ...  }
-	{  path:  'product/detail/23',  component: ...  }
-	{  path:  'product/detail/35',  component: ...  }
-  -----------------------------------------------------------------
-	{  path:  'product/detail/:pid',  component: ...  }
-  路由参数：路由地址中的变量
-  使用步骤：
-  ①路由词典中设置 路由参数：
-	{ path:  'product/detail/:pid',  }
-  ②路由跳转时提供 路由参数值：
-	<any routerLink="/product/detail/35">
-  ③在目标组件中读取当前路由的参数
-	constructor( private route: ActivatedRoute ){  }
-	ngOnInit(){
-		this.route.params.subscribe( (data)=>{
-			data.pid  就是路由参数的值
-		})
-	}
+- 方式1：编程方式  
+  contructor( private router: Router ){ }  
+  ...  
+  this.router.navigateByUrl( '...' )  
+- 方式2：模板方式  
+  \<any  routerLink="...">  
+  注意：routerLink指令可以用在任何元素上，如DIV、A、BUTTON  
 
-午间任务：完整的实现“商品列表”和“商品详情”两个组件的功能：
-获取商品列表的服务器端API:
-http://www.codeboy.com/data/product/list.php
-获取商品详情的服务器端API:
-http://www.codeboy.com/data/product/details.php?lid=35 
+### 路由参数
 
-4.路由嵌套
-  在一个路由组件内部，有部分内容固定，另一区域中的内容可以切换不同的子组件 —— 嵌套路由
-  路由词典：
+  在路由的path属性中，有些部分固定不变，有些部分需要动态变化：  
+`{  path:  'product/detail/:pid',  component: ...  }`  
+
+>路由参数：路由地址中的变量
+
+使用步骤：
+1. 路由词典中设置 路由参数：  
+  `{ path:  'product/detail/:pid',  }`
+2. 路由跳转时提供 路由参数值：  
+  `<any routerLink="/product/detail/35">`
+3. 在目标组件中读取当前路由的参数
+```ts
+  constructor( private route: ActivatedRoute ){  }
+  ngOnInit(){
+    this.route.params.subscribe( (data)=>{
+      data.pid  就是路由参数的值
+    })
+  }
+```
+
+### 路由嵌套
+
+>在一个路由组件内部，有部分内容固定，另一区域中的内容可以切换不同的子组件
+
+路由词典：
+
+```ts
   let  routes = [
- 	{ 
-		path: 'user/center',
-		component: UserCenterComponent,
-		children: [	
-			{ path: 'myinfo', component: ...},
-			{ path: 'headpic', component: ...},
-			{ path: 'security', component: ...},
-		]
-	}
+  {
+    path: 'user/center',
+    component: UserCenterComponent,
+    children: [
+      { path: 'myinfo', component: ...},
+      { path: 'headpic', component: ...},
+      { path: 'security', component: ...},
+    ]
+  }
   ]
-  路由出口：
-	app.component.html:   <router-outlet></router-outlet>
-	user-center.component.html:   ....<router-outlet></router-outlet>....
+```
 
-练习：为“用户中心”创建嵌套路由
-(0)创建必需的子组件
-	ng   g   component   myInfo
-	ng   g   component   headPic
-	ng   g   component   securityManagement
-(1)修改路由词典，为“用户中心”路由添加嵌套路由
-(2)修改“用户中心”模板，添加嵌套路由的出口
+路由出口：  
+  app.component.html:   `<router-outlet></router-outlet>`  
+  user-center.component.html:   `....<router-outlet></router-outlet>....`
 
-5.路由守卫
-  Guard：护卫，守护者
-  有些路由地址只有在特定条件满足的情况下才允许访问，不满足的情况下禁止访问——如是否登录、是否充值、是否满足时间段限制....
-  对访问条件是否满足而进行设置，满足的话，就让访问路由组件；否则就不让访问 —— 这种对象成为“路由守卫对象”。
-  使用方法：
-  ①创建一个路由守卫：
-	@Injectable({		providedIn: 'root'	})
-	class  XxxGuard  {
-		canActivate(){	//组件是否允许被激活
-			......
-			return true / false ;  		
-		}
-	}
-  ②使用路由守卫
-	[{
-			path: 'user/center', 
-			component: UserCenterComponent,
-			canActivate: [  XxxGuard ]
-			children: [ ... ]
-	}]
+### 路由守卫
+
+>Guard：护卫，守护者  
+有些路由地址只有在特定条件满足的情况下才允许访问，不满足的情况下禁止访问——如是否登录、是否充值、是否满足时间段限制....  
+>>对访问条件是否满足而进行设置，满足的话，就让访问路由组件；  
+否则就不让访问 —— 这种对象成为“路由守卫对象”。
+
+#### 使用方法
+
+- 创建一个路由守卫：
+
+```ts
+  @Injectable({   providedIn: 'root'  })
+  class  XxxGuard  {
+    canActivate(){ //组件是否允许被激活
+      ......
+      return true / false ;
+    }
+  }
+```
+
+- 使用路由守卫
+
+```ts
+  [{
+      path: 'user/center',
+      component: UserCenterComponent,
+      canActivate: [  XxxGuard ]
+      children: [ ... ]
+  }]
+```
+
 练习：创建一个路由守卫： TimeCheckGuard，
-	作用：如果当前时间是18:00~24:00，允许用户访问user/center，否则禁止访问
+  作用：如果当前时间是18:00~24:00，允许用户访问user/center，否则禁止访问
 
-移动端应用的种类：
-(1)Native App：
-  原生App，指使用Java/Kotlin为Android、OC/Swift为iOS开发应用程序，直接运行与手机操作系统上
-  优势：运行速度快     劣势：两套代码不跨平台，且必须下载
-(2)Web App：
-  使用HTML/CSS/JS技术编写类似原生App的应用，代码运行于手机中的浏览器(如WebView)中
-  优势：无需提前下载、一套代码到处运行  劣势：运行效率低、不能访问手机底层系统服务
-(3)Hybrid App：
-  使用HTML/CSS/JS技术编写类似原生App的应用，并混入部分Java/OC等驱动代码以调用系统底层服务，最终运行于操作系统中
-  优势：结合了前两种的优势
-(4)Dart / Flutter —— 代表着未来   
+## 移动端应用的种类
 
-6.基于Angular的UI组件库
-  Angular相关的组件库：
-	(1)Ionic
-	(2)Material
-	(3)Zorro
-	(4)Zorro Mobile
+- Native App：  
+  原生App，指使用Java/Kotlin为Android、OC/Swift为iOS开发应用程序，直接运行与手机操作系统上  
+  - 优势：运行速度快  
+  - 劣势：两套代码不跨平台，且必须下载
+- Web App：  
+  使用HTML/CSS/JS技术编写类似原生App的应用，代码运行于手机中的浏览器(如WebView)中  
+  - 优势：无需提前下载、一套代码到处运行  
+  - 劣势：运行效率低、不能访问手机底层系统服务
+- Hybrid App：  
+  使用HTML/CSS/JS技术编写类似原生App的应用，并混入部分Java/OC等驱动代码以调用系统底层服务，最终运行于操作系统中  
+  - 优势：结合了前两种的优势  
+- Dart / Flutter —— 代表着未来  
 
- Ionic概述：https://ionicframework.com/
- Ionic是一个基于HTML/CSS/JS技术的，创建混合App的UI组件库技术。底层可以不依赖于任何框架(引入.css和.js就可以运行)，也可以与Vue.js、React、Angular框架整合在一起，作为它们的第三方组件库使用。
-  使用方法：
-  (1)下载全局脚手架工具    
-	npm  i   -g   ionic
-  (2)选择一个目录，运行脚手架工具在当前目录下创建一个项目
-	ionic  start   项目名   blank
-	ionic  start   项目名   tabs
-	ionic  start   项目名   sidemenu
-	创建好项目后会自动调用npm  i下载所依赖的第三方模块
-  (3)进入项目目录，运行它
-	cd  项目名
-	npm  start
-  (4)用(手机)浏览器访问项目
-	http://127.0.0.1:4200
+## 基于Angular的UI组件库
+
+### Angular相关的组件库
+
+- Ionic
+- Material
+- Zorro
+- Zorro Mobile
+
+>[Link : Ionic官网](https://ionicframework.com/)  
+>>Ionic是一个基于HTML/CSS/JS技术的，创建混合App的UI组件库技术。  
+底层可以不依赖于任何框架(引入.css和.js就可以运行)，也可以与Vue.js、React、Angular框架整合在一起，作为它们的第三方组件库使用
+>>>第三方提供的一套WEB UI组件库，适用于编写Hybrid App。可以与Angular、Vue、React组合使用，也可以单独直接使用。  
+>>>>Ionic CLI = Angular CLI + UIModule + 移动端打包工具....
+
+### Ionic 使用方法
+
+1. 下载全局脚手架工具  
+`npm  i   -g   ionic`
+2. 选择一个目录，运行脚手架工具在当前目录下创建一个项目  
+   - ionic  start   项目名   blank
+   - ionic  start   项目名   tabs
+   - ionic  start   项目名   sidemenu  
+**创建好项目后会自动调用npm  i下载所依赖的第三方模块**
+3. 进入项目目录，运行它  
+cd  项目名  
+npm  start  
+4. 用(手机)浏览器访问项目  
+`http://127.0.0.1:4200`
+
+#### Ionic的九种主题色——color
+
+- primary(蓝白)
+- secondary(青白)
+- tertiary(偏紫白)
+- danger(红白)
+- warn(黄白)
+- success(绿白)
+- dark(黑白)
+- medium(灰白)
+- light(亮色)
+
+#### Ionic App的页面布局
+
+  <ion-app>
+	ion-header > ion-toolbar > ion-title > 标题
+	ion-content[padding] > 内容
+	ion-footer > ion-toolbar > ion-title > 内容
+  </ion-app>
+  --------------------------------------------------------
+  Ionic主体中的“栅格布局系统”——仿Bootstrap3：
+  <ion-grid >
+	<ion-row>
+		<ion-col  no-padding  size="宽"  offset="偏移"  push="右推"  pull="左拉" >
+		</ion-col>
+	</ion-row>
+  </ion-grid>
+
+Module：模块
+Model：模型，MVVM中第一个M
+Modal：模态对话框——只要不关闭就无法使用其父窗口
+
+#### Ionic提供预定义组件
+
+  Icon：图标  <ion-icon name="">
+  Button：按钮  <ion-button>
+  Badge：徽章  <ion-badge>
+  Card：卡片  ion-card > ion-card-header + ion-card-content
+  Alert：警告框，必须使用AlertController创建并呈现
+  Modal：模态框，必须使用ModalController创建并呈现
+  Item：列表项
+  List：列表
+  InfiniteScroll：无穷滚动组件，滚动到底部时加载更多内容
+  Refresher：刷新器，从顶部显示加载更多内容
 
 
 课后任务：
-(1)复习：整理完整版Angular知识点思维导图
-(2)(如果能上网的话)安装Ionic CLI脚手架工具，创建三个不同类型的项目：①空白项目、②页签式导航项目、③侧边菜单项目
-(3)查看Ionic项目的目录结构，查找与普通Angular项目的异同
+(1)读取Ionic手册，完成InfiniteScroll和Refresher组件的使用
+  注意：需要使用http://www.codeboy.com/data/product/list.php提供的跨域数据。
+(2)自学Ionic中Slides组件和Tabs组件的使用
+
+
+
+
 
 
 
